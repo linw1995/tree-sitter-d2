@@ -1,24 +1,103 @@
-const spaces = repeat(choice(" ", "\t"));
+const PREC = {
+  COMMENT: -2,
+  IDENTIFIER: 11,
+  SHAPE: 10,
+  CONTAINER: 9,
+};
+
+spaces = /[ \t]/;
 
 module.exports = grammar({
   name: "d2",
 
-  extras: ($) => [$.line_comment],
+  extras: ($) => [
+    /[ \f\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]/,
+    $.line_comment,
+  ],
 
   word: ($) => $._word,
 
   conflicts: ($) => [
-    [$.shape_key],
+    //[$.shape_key],
+    /*
     [$._shape_path],
     [$._shape_block],
     [$._shape_block_definition],
     [$._style_attr_block],
     [$._inner_style_attribute],
     [$._emptyline],
+*/
   ],
 
   rules: {
-    source_file: ($) => repeat($._root_definition),
+    source_file: ($) => repeat($._new_root_definition),
+
+    _new_root_definition: ($) => choice($._eol, $.shape, $.container),
+
+    container: ($) =>
+      prec(
+        PREC.CONTAINER,
+        seq(
+          alias($.shape_key, $.container_key),
+          choice(
+            seq($._dot, $.shape),
+            seq(
+              seq(
+                optional(seq($._colon, optional($.label))),
+                optional(seq(alias($._new_container_block, $.block)))
+              )
+            )
+          )
+        )
+      ),
+
+    shape: ($) =>
+      prec(
+        PREC.SHAPE,
+        seq(
+          $.shape_key,
+          optional(
+            seq(
+              optional(seq($._colon, optional($.label))),
+              optional(seq(alias($._new_shape_block, $.block)))
+            )
+          ),
+          $._end
+        )
+      ),
+
+    shape_key: ($) =>
+      choice(
+        $.string,
+        prec.left(
+          seq(
+            optional($._dash),
+            choice(
+              $._word,
+              token(prec(PREC.IDENTIFIER, /([\w\d]+( +|\-)[\w\d]+)+/))
+            ),
+            optional($._dash)
+          )
+        )
+      ),
+
+    _new_shape_block: ($) =>
+      prec(PREC.SHAPE, seq("{", repeat($._new_shape_block_definition), "}")),
+
+    _new_shape_block_definition: ($) => prec(PREC.SHAPE, choice($._eol)),
+
+    _new_container_block: ($) =>
+      prec(
+        PREC.CONTAINER,
+        seq("{", repeat($._new_container_block_definition), "}")
+      ),
+
+    _new_container_block_definition: ($) =>
+      prec(PREC.CONTAINER, choice($._eol, $.shape, $.container)),
+
+    // --------------------------------------------
+
+    // source_file: ($) => repeat($._root_definition),
 
     _root_definition: ($) =>
       choice(
@@ -58,19 +137,6 @@ module.exports = grammar({
         spaces,
         repeat(seq(alias($.shape_key, $.container_key), spaces, $.dot, spaces)),
         $.shape_key
-      ),
-
-    shape_key: ($) =>
-      choice(
-        $.string,
-        seq(
-          optional($._dash),
-          choice(
-            $._word,
-            repeat1(seq($._word, choice(repeat1(" "), $._dash), $._word))
-          ),
-          optional($._dash)
-        )
       ),
 
     _dash: ($) => token.immediate("-"),
@@ -169,15 +235,16 @@ module.exports = grammar({
 
     _connection_attr_key: ($) => choice("source-arrowhead", "target-arrowhead"),
 
-    _colon: ($) => seq(spaces, ":"),
+    _colon: ($) => seq(":"),
 
     _arrow: ($) => seq(spaces, $.arrow),
 
     arrow: ($) => choice(/-+>/, /--+/, /<-+/, /<-+>/),
 
-    dot: ($) => token.immediate("."),
+    _dot: ($) => seq($.dot),
+    dot: ($) => token("."),
 
-    _unquoted_string: ($) => token.immediate(/[^'"`\n;{}]+/),
+    _unquoted_string: ($) => token(prec(5, /[\w\-]([^'"`\n;{}]*[\w\-])?/)),
 
     string: ($) =>
       choice(
@@ -186,12 +253,12 @@ module.exports = grammar({
         seq("`", repeat(token.immediate(/[^`\n]+/)), "`")
       ),
 
-    line_comment: ($) => token(prec(-2, seq("#", /.*/))),
+    line_comment: ($) => token(prec(PREC.COMMENT, seq("#", /.*/))),
 
     _word: ($) => /[\w\d]+/,
 
-    _emptyline: ($) => seq(spaces, $._eof),
-    _eof: ($) => choice("\n", "\0"),
-    _end: ($) => seq(spaces, choice(";", $._eof)),
+    _emptyline: ($) => prec(-1, seq(spaces, $._eol)),
+    _eol: ($) => choice("\n", "\0"),
+    _end: ($) => seq(choice(";", $._eol)),
   },
 });

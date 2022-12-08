@@ -49,6 +49,10 @@
           "named": true
         },
         {
+          "type": "container",
+          "named": true
+        },
+        {
           "type": "container_key",
           "named": true
         },
@@ -58,6 +62,10 @@
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "shape",
           "named": true
         },
         {
@@ -101,6 +109,37 @@
         },
         {
           "type": "shape_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "container",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "container_key",
+          "named": true
+        },
+        {
+          "type": "dot",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "shape",
           "named": true
         }
       ]
@@ -164,6 +203,29 @@
     }
   },
   {
+    "type": "shape",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "shape_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "shape_key",
     "named": true,
     "fields": {},
@@ -187,39 +249,11 @@
       "required": false,
       "types": [
         {
-          "type": "attr_key",
+          "type": "container",
           "named": true
         },
         {
-          "type": "attr_value",
-          "named": true
-        },
-        {
-          "type": "block",
-          "named": true
-        },
-        {
-          "type": "connection",
-          "named": true
-        },
-        {
-          "type": "container_key",
-          "named": true
-        },
-        {
-          "type": "dot",
-          "named": true
-        },
-        {
-          "type": "invalid",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "shape_key",
+          "type": "shape",
           "named": true
         }
       ]
@@ -235,15 +269,7 @@
     "named": false
   },
   {
-    "type": "\t",
-    "named": false
-  },
-  {
     "type": "\n",
-    "named": false
-  },
-  {
-    "type": " ",
     "named": false
   },
   {
