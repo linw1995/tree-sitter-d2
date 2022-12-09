@@ -201,10 +201,6 @@
           "named": true
         },
         {
-          "type": "block",
-          "named": true
-        },
-        {
           "type": "dot",
           "named": true
         },

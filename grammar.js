@@ -5,8 +5,6 @@ const PREC = {
   CONTAINER: 2,
   CONNECTION: 2,
   SHAPE: 3,
-  CONTAINER_BLOCK: 4,
-  SHAPE_BLOCK: 4,
   IDENTIFIER: 0,
   ARROW: 0,
   ATTRIBUTE: 0,
@@ -23,10 +21,7 @@ module.exports = grammar({
 
   word: ($) => $._identifier,
 
-  conflicts: ($) => [
-    [$._connection_path, $.container],
-    [$._container_block_definition, $._shape_block_definition],
-  ],
+  conflicts: ($) => [[$._connection_path, $.container]],
 
   rules: {
     source_file: ($) => repeat($._root_definition),
@@ -82,15 +77,15 @@ module.exports = grammar({
       ),
 
     _container_block: ($) =>
-      prec(
-        PREC.CONTAINER,
-        seq("{", repeat($._container_block_definition), "}")
-      ),
+      seq("{", repeat($._container_block_definition), "}"),
 
     _container_block_definition: ($) =>
-      prec(
-        PREC.CONTAINER_BLOCK,
-        choice($._eol, seq(choice($.shape, $.container, $.connection), $._end))
+      choice(
+        $._eol,
+        seq(
+          choice($.shape, $.container, $.connection, $._shape_attribute),
+          $._end
+        )
       ),
 
     // shapes
@@ -103,10 +98,7 @@ module.exports = grammar({
           optional(
             choice(
               seq($.dot, alias($._style_attribute, $.attribute)),
-              seq(
-                optional(seq($._colon, optional($.label))),
-                optional(seq(alias($._shape_block, $.block)))
-              )
+              seq(optional(seq($._colon, optional($.label))))
             )
           )
         )
@@ -116,11 +108,6 @@ module.exports = grammar({
 
     _identifier: ($) =>
       token(prec(PREC.IDENTIFIER, /\-?([\w\d]+|([\w\d]+( +|\-)[\w\d]+)+)/)),
-
-    _shape_block: ($) =>
-      prec(PREC.SHAPE, seq("{", repeat($._shape_block_definition), "}")),
-
-    _shape_block_definition: ($) => prec(PREC.SHAPE_BLOCK, choice($._eol)),
 
     // attributes
 
@@ -144,6 +131,15 @@ module.exports = grammar({
           $.reserved
         )
       ),
+
+    _shape_attribute: ($) =>
+      choice(
+        alias($._base_shape_attribute, $.attribute),
+        alias($._style_attribute, $.attribute)
+      ),
+
+    _base_shape_attribute: ($) =>
+      seq(alias($._shape_attr_key, $.attr_key), $._colon, $.attr_value),
 
     _shape_attr_key: ($) =>
       prec(
