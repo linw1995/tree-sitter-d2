@@ -10,8 +10,6 @@ const PREC = {
   ATTRIBUTE_KEY: 0,
 };
 
-spaces = /[ \t]/;
-
 module.exports = grammar({
   name: "d2",
 
@@ -22,28 +20,17 @@ module.exports = grammar({
 
   word: ($) => $._identifier,
 
-  conflicts: ($) => [
-    [$._connection_path, $.container],
-    //[$.shape_key],
-    /*
-    [$._shape_path],
-    [$._shape_block],
-    [$._shape_block_definition],
-    [$._style_attr_block],
-    [$._inner_style_attribute],
-    [$._emptyline],
-*/
-  ],
+  conflicts: ($) => [[$._connection_path, $.container]],
 
   rules: {
-    source_file: ($) => repeat($._new_root_definition),
+    source_file: ($) => repeat($._root_definition),
 
-    _new_root_definition: ($) =>
+    _root_definition: ($) =>
       choice(
         $._eol,
         seq(
           choice(
-            alias($._new_root_attribute, $.attribute),
+            alias($._root_attribute, $.attribute),
             $.shape,
             $.container,
             $.connection
@@ -57,17 +44,14 @@ module.exports = grammar({
     connection: ($) =>
       seq(
         $._connection_path,
-        repeat1(seq($._arrow, $._connection_path)),
+        repeat1(seq($.arrow, $._connection_path)),
         optional(seq($._colon, $.label))
       ),
 
     _connection_path: ($) =>
       seq(
         repeat(
-          prec(
-            PREC.CONNECTION,
-            seq(alias($.shape_key, $.container_key), $._dot)
-          )
+          prec(PREC.CONNECTION, seq(alias($.shape_key, $.container_key), $.dot))
         ),
         $.shape_key
       ),
@@ -80,24 +64,24 @@ module.exports = grammar({
         seq(
           alias($.shape_key, $.container_key),
           choice(
-            seq($._dot, choice($.shape, $.container)),
+            seq($.dot, choice($.shape, $.container)),
             seq(
               seq(
                 optional(seq($._colon, optional($.label))),
-                optional(seq(alias($._new_container_block, $.block)))
+                optional(seq(alias($._container_block, $.block)))
               )
             )
           )
         )
       ),
 
-    _new_container_block: ($) =>
+    _container_block: ($) =>
       prec(
         PREC.CONTAINER,
-        seq("{", repeat($._new_container_block_definition), "}")
+        seq("{", repeat($._container_block_definition), "}")
       ),
 
-    _new_container_block_definition: ($) =>
+    _container_block_definition: ($) =>
       prec(
         PREC.CONTAINER,
         choice($._eol, seq(choice($.shape, $.container, $.connection), $._end))
@@ -112,10 +96,10 @@ module.exports = grammar({
           $.shape_key,
           optional(
             choice(
-              seq($._dot, alias($._style_attribute, $.attribute)),
+              seq($.dot, alias($._style_attribute, $.attribute)),
               seq(
                 optional(seq($._colon, optional($.label))),
-                optional(seq(alias($._new_shape_block, $.block)))
+                optional(seq(alias($._shape_block, $.block)))
               )
             )
           )
@@ -127,14 +111,14 @@ module.exports = grammar({
     _identifier: ($) =>
       token(prec(PREC.IDENTIFIER, /\-?([\w\d]+|([\w\d]+( +|\-)[\w\d]+)+)/)),
 
-    _new_shape_block: ($) =>
-      prec(PREC.SHAPE, seq("{", repeat($._new_shape_block_definition), "}")),
+    _shape_block: ($) =>
+      prec(PREC.SHAPE, seq("{", repeat($._shape_block_definition), "}")),
 
-    _new_shape_block_definition: ($) => prec(PREC.SHAPE, choice($._eol)),
+    _shape_block_definition: ($) => prec(PREC.SHAPE, choice($._eol)),
 
     // attributes
 
-    _new_root_attribute: ($) =>
+    _root_attribute: ($) =>
       seq(alias($._root_attr_key, $.attr_key), $._colon, $.attr_value),
 
     _root_attr_key: ($) =>
@@ -176,7 +160,7 @@ module.exports = grammar({
         seq(
           alias("style", $.attr_key),
           choice(
-            seq($._dot, alias($._inner_style_attribute, $.attribute)),
+            seq($.dot, alias($._inner_style_attribute, $.attribute)),
             seq($._colon, alias($._style_attribute_block, $.block))
           )
         )
@@ -229,95 +213,12 @@ module.exports = grammar({
 
     // --------------------------------------------
 
-    // source_file: ($) => repeat($._root_definition),
-    /*
-
-    _root_definition: ($) =>
-      choice(
-        $._emptyline,
-        $._root_attribute,
-        $.connection,
-        $._shape_definition
-      ),
-
-    _shape_definition: ($) =>
-      seq(
-        $._shape_path,
-        optional(
-          choice(
-            seq($.dot, $._shape_attribute),
-            seq(
-              optional(seq($._colon, optional(seq(spaces, $.label)))),
-              optional(alias($._shape_block, $.block))
-            )
-          )
-        ),
-        $._end
-      ),
-
-    _shape_path: ($) =>
-      seq(
-        spaces,
-        repeat(seq(alias($.shape_key, $.container_key), spaces, $.dot, spaces)),
-        $.shape_key
-      ),
-
-
-    _shape_block: ($) =>
-      seq(
-        spaces,
-        "{",
-        repeat(choice($._emptyline, seq(spaces, $._shape_block_definition))),
-        optional(seq($._shape_block_definition, optional($._end))),
-        spaces,
-        "}"
-      ),
-
-    _shape_block_definition: ($) =>
-      choice($.connection, $._shape_definition, $._shape_attribute),
-
-    _shape_attribute: ($) =>
-      choice(
-        seq(alias($._shape_attr_key, $.attr_key), $._colon, $.attr_value),
-        $._style_attribute
-      ),
-
-    _style_attribute: ($) =>
-      seq(
-        alias("style", $.attr_key),
-        choice(
-          seq($.dot, $._inner_style_attribute),
-          seq($._colon, alias($._style_attr_block, $.block))
-        )
-      ),
-
-    _style_attr_block: ($) =>
-      seq(
-        spaces,
-        "{",
-        spaces,
-        repeat(choice($._emptyline, seq($._inner_style_attribute, $._end))),
-        optional(seq($._inner_style_attribute, optional($._end))),
-        spaces,
-        "}"
-      ),
-
-    _inner_style_attribute: ($) =>
-      seq(spaces, alias($._style_attr_key, $.attr_key), $._colon, $.attr_value),
-
-    _connection_attribute: ($) =>
-      seq(alias($._connection_attr_key, $.attr_key), $._colon, $.attr_value),
-    */
-
     _dash: ($) => token.immediate("-"),
 
     _colon: ($) => seq(":"),
 
-    _arrow: ($) => seq($.arrow),
-
     arrow: ($) => token(prec(PREC.ARROW, choice(/-+>/, /--+/, /<-+/, /<-+>/))),
 
-    _dot: ($) => seq($.dot),
     dot: ($) => token("."),
 
     _unquoted_string: ($) =>
@@ -332,9 +233,6 @@ module.exports = grammar({
 
     line_comment: ($) => token(prec(PREC.COMMENT, seq("#", /.*/))),
 
-    _word: ($) => /[\w\d]+/,
-
-    _emptyline: ($) => prec(-1, seq(spaces, $._eol)),
     _eol: ($) => choice("\n", "\0"),
     _end: ($) => seq(choice(";", $._eol)),
   },
