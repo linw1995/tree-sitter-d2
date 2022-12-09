@@ -111,7 +111,7 @@ module.exports = grammar({
     _new_container_block_definition: ($) =>
       prec(
         PREC.CONTAINER,
-        choice($._eol, seq(choice($.shape, $.container), $._end))
+        choice($._eol, seq(choice($.shape, $.container, $.connection), $._end))
       ),
 
     // --------------------------------------------

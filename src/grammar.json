@@ -428,6 +428,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "container"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "connection"
                   }
                 ]
               },
