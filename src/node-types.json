@@ -44,6 +44,18 @@
         {
           "type": "attr_value",
           "named": true
+        },
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "dot",
+          "named": true
         }
       ]
     }
@@ -56,6 +68,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
         {
           "type": "connection",
           "named": true
@@ -181,7 +197,15 @@
       "required": true,
       "types": [
         {
+          "type": "attribute",
+          "named": true
+        },
+        {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "dot",
           "named": true
         },
         {

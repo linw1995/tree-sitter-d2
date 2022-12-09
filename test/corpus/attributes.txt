@@ -43,3 +43,74 @@ near: abc
   (attribute (attr_key (reserved)) (attr_value))
 )
 
+================================================================================
+Style attribute
+================================================================================
+foo.style.opacity: 5
+foo.style.fill: red
+foo.style.stroke: red
+foo.style.stroke-width: 5
+foo.style.stroke-dash: 4
+foo.style.border-radius: 1
+foo.style.font-color: red
+foo.style.shadow: true
+foo.style.multiple: true
+foo.style.animated: true
+foo.style.link: https://to
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+)
+
+================================================================================
+Block style attributes
+================================================================================
+foo.style: {
+  opacity: 5
+  fill: red
+  stroke: red
+  stroke-width: 5
+  stroke-dash: 4
+  border-radius: 1
+  font-color: red
+  shadow: true
+  multiple: true
+  animated: true
+  link: https://to
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (shape
+    (shape_key) (dot)
+    (attribute
+      (attr_key)
+      (block
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+        (attribute (attr_key) (attr_value))
+      )
+    )
+  )
+)

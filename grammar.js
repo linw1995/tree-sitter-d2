@@ -111,9 +111,12 @@ module.exports = grammar({
         seq(
           $.shape_key,
           optional(
-            seq(
-              optional(seq($._colon, optional($.label))),
-              optional(seq(alias($._new_shape_block, $.block)))
+            choice(
+              seq($._dot, alias($._style_attribute, $.attribute)),
+              seq(
+                optional(seq($._colon, optional($.label))),
+                optional(seq(alias($._new_shape_block, $.block)))
+              )
             )
           )
         )
@@ -132,10 +135,7 @@ module.exports = grammar({
     // attributes
 
     _new_root_attribute: ($) =>
-      prec(
-        PREC.ATTRIBUTE,
-        seq(alias($._root_attr_key, $.attr_key), $._colon, $.attr_value)
-      ),
+      seq(alias($._root_attr_key, $.attr_key), $._colon, $.attr_value),
 
     _root_attr_key: ($) =>
       choice(
@@ -147,6 +147,7 @@ module.exports = grammar({
             "label",
             "constraint",
             "icon",
+            "style",
             $._common_style_attr_key,
             $._text_attr_key
           ),
@@ -167,6 +168,36 @@ module.exports = grammar({
           "width",
           "height"
         )
+      ),
+
+    _style_attribute: ($) =>
+      prec(
+        PREC.ATTRIBUTE,
+        seq(
+          alias("style", $.attr_key),
+          choice(
+            seq($._dot, alias($._inner_style_attribute, $.attribute)),
+            seq($._colon, alias($._style_attribute_block, $.block))
+          )
+        )
+      ),
+
+    _style_attribute_block: ($) =>
+      seq(
+        "{",
+        repeat(
+          choice(
+            $._eol,
+            seq(alias($._inner_style_attribute, $.attribute), $._end)
+          )
+        ),
+        "}"
+      ),
+
+    _inner_style_attribute: ($) =>
+      prec(
+        PREC.ATTRIBUTE,
+        seq(alias($._style_attr_key, $.attr_key), $._colon, $.attr_value)
       ),
 
     _style_attr_key: ($) => choice($._common_style_attr_key, "3d"),
