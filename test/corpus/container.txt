@@ -21,7 +21,7 @@ foo.bar.biz
 )
 
 ================================================================================
-Use quoted string as a shape key
+Use quoted string as keys
 ================================================================================
 'foo'.'baz'
 
@@ -42,39 +42,6 @@ foo: {
   bar: {
     baz: {
       biz
-    }
-  }
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (container
-    (container_key)
-    (block
-      (container
-        (container_key)
-        (block
-          (container
-            (container_key)
-            (block
-              (shape (shape_key))
-            )
-          )
-        )
-      )
-    )
-  )
-)
-
-================================================================================
-Declare a container with complex keys
-================================================================================
-
-Foo biz bar: {
-  bar biz baz: {
-    -biz-baz-Baz-: {
-      Helo world
     }
   }
 }
@@ -158,4 +125,75 @@ foo: {
     )
   )
 )
+
+
+================================================================================
+Declare a container with complex keys
+================================================================================
+
+Foo biz bar: {
+  bar biz baz: {
+    -biz-baz-Baz-: {
+      Helo world
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (block
+      (container
+        (container_key)
+        (block
+          (container
+            (container_key)
+            (block
+              (shape (shape_key))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+================================================================================
+Declare a container with complex keys and labels
+================================================================================
+
+Foo biz bar: Biz biz Bar {
+  bar biz baz: baz baz biz {
+    -biz-baz-Baz-: Biz buz Baz {
+      Helo world
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (label)
+    (block
+      (container
+        (container_key)
+        (label)
+        (block
+          (container
+            (container_key)
+            (label)
+            (block
+              (shape (shape_key))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
 
