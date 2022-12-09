@@ -1,5 +1,6 @@
 const PREC = {
   COMMENT: -2,
+  UNQUOTED_STRING: 5,
   CONTAINER: 9,
   CONNECTION: 9,
   SHAPE: 11,
@@ -252,7 +253,8 @@ module.exports = grammar({
     _dot: ($) => seq($.dot),
     dot: ($) => token("."),
 
-    _unquoted_string: ($) => token(prec(5, /[\w\-?!]([^'"`\n;{}]*[\w\-?!])?/)),
+    _unquoted_string: ($) =>
+      token(prec(PREC.UNQUOTED_STRING, /[\w\-?!]([^'"`\n;{}]*[\w\-?!])?/)),
 
     string: ($) =>
       choice(
