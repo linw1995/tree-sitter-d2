@@ -1,9 +1,12 @@
 const PREC = {
   COMMENT: -2,
+  EOL: -1,
   UNQUOTED_STRING: 0,
   CONTAINER: 2,
   CONNECTION: 2,
   SHAPE: 3,
+  CONTAINER_BLOCK: 4,
+  SHAPE_BLOCK: 4,
   IDENTIFIER: 0,
   ARROW: 0,
   ATTRIBUTE: 0,
@@ -20,7 +23,10 @@ module.exports = grammar({
 
   word: ($) => $._identifier,
 
-  conflicts: ($) => [[$._connection_path, $.container]],
+  conflicts: ($) => [
+    [$._connection_path, $.container],
+    [$._container_block_definition, $._shape_block_definition],
+  ],
 
   rules: {
     source_file: ($) => repeat($._root_definition),
@@ -83,7 +89,7 @@ module.exports = grammar({
 
     _container_block_definition: ($) =>
       prec(
-        PREC.CONTAINER,
+        PREC.CONTAINER_BLOCK,
         choice($._eol, seq(choice($.shape, $.container, $.connection), $._end))
       ),
 
@@ -114,7 +120,7 @@ module.exports = grammar({
     _shape_block: ($) =>
       prec(PREC.SHAPE, seq("{", repeat($._shape_block_definition), "}")),
 
-    _shape_block_definition: ($) => prec(PREC.SHAPE, choice($._eol)),
+    _shape_block_definition: ($) => prec(PREC.SHAPE_BLOCK, choice($._eol)),
 
     // attributes
 
@@ -233,7 +239,7 @@ module.exports = grammar({
 
     line_comment: ($) => token(prec(PREC.COMMENT, seq("#", /.*/))),
 
-    _eol: ($) => choice("\n", "\0"),
+    _eol: ($) => token(prec(PREC.EOL, choice("\n", "\0"))),
     _end: ($) => seq(choice(";", $._eol)),
   },
 });

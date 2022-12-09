@@ -3,6 +3,7 @@
 (container_key) @constant
 (shape_key) @variable
 (attr_key) @property
+(reserved) @error
 
 ; Literals
 ;-------------------------------------------------------------------------------

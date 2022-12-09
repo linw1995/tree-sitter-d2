@@ -196,4 +196,31 @@ Foo biz bar: Biz biz Bar {
   )
 )
 
+================================================================================
+Declare shapes sparsely in a container
+================================================================================
 
+Foo: Baz {
+
+  biz
+  
+  baz
+
+  bar
+
+
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (label)
+    (block
+      (shape (shape_key))
+      (shape (shape_key))
+      (shape (shape_key))
+    )
+  )
+)

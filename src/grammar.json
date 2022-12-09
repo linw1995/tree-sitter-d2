@@ -265,7 +265,7 @@
     },
     "_container_block_definition": {
       "type": "PREC",
-      "value": 2,
+      "value": 4,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -469,7 +469,7 @@
     },
     "_shape_block_definition": {
       "type": "PREC",
-      "value": 3,
+      "value": 4,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -977,17 +977,24 @@
       }
     },
     "_eol": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "\n"
-        },
-        {
-          "type": "STRING",
-          "value": "\u0000"
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "\n"
+            },
+            {
+              "type": "STRING",
+              "value": "\u0000"
+            }
+          ]
         }
-      ]
+      }
     },
     "_end": {
       "type": "SEQ",
@@ -1022,6 +1029,10 @@
     [
       "_connection_path",
       "container"
+    ],
+    [
+      "_container_block_definition",
+      "_shape_block_definition"
     ]
   ],
   "precedences": [],
