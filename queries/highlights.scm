@@ -2,7 +2,7 @@
 ;-------------------------------------------------------------------------------
 
 (ERROR) @error
-(invalid (_) @error)
+; (invalid (_) @error)
 ;-------------------------------------------------------------------------------
 
 (container_key) @constant
@@ -15,7 +15,7 @@
 (container_key (string) @string.special)
 (shape_key (string) @string)
 (label) @string 
-(attr_value) @string
+; (attr_value) @string
 
 ; Comments
 ;-------------------------------------------------------------------------------
@@ -42,4 +42,4 @@
 ;-------------------------------------------------------------------------------
 
 (ERROR) @error
-(invalid (_) @error)
+; (invalid (_) @error)
