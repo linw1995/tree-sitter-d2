@@ -1,106 +1,198 @@
 ================================================================================
-Simple shape key
+Simple connection
 ================================================================================
-foo
-bar
+foo--bar
+biz->baz
+biz<->baz
+biz<-baz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key))
-  (shape (shape_key))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
 ================================================================================
-Complex shape key
+Formatted connection
 ================================================================================
- Foo bar 
--Biz-baz-
+foo -- bar
+biz -> baz
+biz <-> baz
+biz <- baz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key))
-  (shape (shape_key))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
 ================================================================================
-Use quoted string as a shape key
+Connection with looooong arrow
 ================================================================================
-'foo'
+foo ----------- bar
+biz ----------> baz
+biz <---------> baz
+biz <---------- baz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key (string)))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
+
 ================================================================================
-Define multiple shapes using semicolons
+Complex identifier connection
 ================================================================================
-a;b;c
+Foo Bar -- Biz Baz
+-Bar-Foo- <- -Baz-Biz-
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key))
-  (shape (shape_key))
-  (shape (shape_key))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
 ================================================================================
-Labeled shapes
+Inline connection
 ================================================================================
-a: Foo Bar
-a: Foo Bar; b: Biz Baz
+foo--bar->biz->baz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (label))
-  (shape (shape_key) (label))
-  (shape (shape_key) (label))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+    (arrow)
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
 ================================================================================
-It should skip white spaces
+Many connections inline
 ================================================================================
-
-foo
-
-bar   :  Foo Bar;     baz
+foo--bar;biz->baz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key))
-  (shape (shape_key) (label))
-  (shape (shape_key))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+  )
 )
 
 ================================================================================
-Shape block
+Labeled connections
 ================================================================================
-
-foo: {}
-bar {}
+foo--bar: Question?
+bar -> baz: Yes
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (block))
-  (shape (shape_key) (block))
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+    (label)
+  )
+  (connection
+    (shape_key)
+    (arrow)
+    (shape_key)
+    (label)
+  )
 )
 
 ================================================================================
-Labeled shape block
+Connection of shapes inside a containers
 ================================================================================
-
-foo: Foo {}
+foo.biz.baz -> bar.baz.biz: Label
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (label) (block))
+  (connection
+    (container_key) (dot) (container_key) (dot) (shape_key)
+    (arrow)
+    (container_key) (dot) (container_key) (dot) (shape_key)
+    (label)
+  )
 )
-

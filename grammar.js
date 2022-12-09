@@ -1,8 +1,10 @@
 const PREC = {
   COMMENT: -2,
-  IDENTIFIER: 11,
-  SHAPE: 10,
   CONTAINER: 9,
+  CONNECTION: 9,
+  SHAPE: 11,
+  IDENTIFIER: 12,
+  ARROW: 13,
 };
 
 spaces = /[ \t]/;
@@ -18,6 +20,7 @@ module.exports = grammar({
   word: ($) => $._word,
 
   conflicts: ($) => [
+    [$._connection_path, $.container],
     //[$.shape_key],
     /*
     [$._shape_path],
@@ -32,7 +35,26 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._new_root_definition),
 
-    _new_root_definition: ($) => choice($._eol, $.shape, $.container),
+    _new_root_definition: ($) =>
+      choice($._eol, seq(choice($.shape, $.container, $.connection), $._end)),
+
+    connection: ($) =>
+      seq(
+        $._connection_path,
+        repeat1(seq($._arrow, $._connection_path)),
+        optional(seq($._colon, $.label))
+      ),
+
+    _connection_path: ($) =>
+      seq(
+        repeat(
+          prec(
+            PREC.CONNECTION,
+            seq(alias($.shape_key, $.container_key), $._dot)
+          )
+        ),
+        $.shape_key
+      ),
 
     container: ($) =>
       prec(
@@ -40,7 +62,7 @@ module.exports = grammar({
         seq(
           alias($.shape_key, $.container_key),
           choice(
-            seq($._dot, $.shape),
+            seq($._dot, choice($.shape, $.container)),
             seq(
               seq(
                 optional(seq($._colon, optional($.label))),
@@ -61,23 +83,16 @@ module.exports = grammar({
               optional(seq($._colon, optional($.label))),
               optional(seq(alias($._new_shape_block, $.block)))
             )
-          ),
-          $._end
+          )
         )
       ),
 
     shape_key: ($) =>
       choice(
         $.string,
-        prec.left(
-          seq(
-            optional($._dash),
-            choice(
-              $._word,
-              token(prec(PREC.IDENTIFIER, /([\w\d]+( +|\-)[\w\d]+)+/))
-            ),
-            optional($._dash)
-          )
+        seq(
+          token(prec(PREC.IDENTIFIER, /\-?([\w\d]+|([\w\d]+( +|\-)[\w\d]+)+)/)),
+          optional($._dash)
         )
       ),
 
@@ -93,7 +108,10 @@ module.exports = grammar({
       ),
 
     _new_container_block_definition: ($) =>
-      prec(PREC.CONTAINER, choice($._eol, $.shape, $.container)),
+      prec(
+        PREC.CONTAINER,
+        choice($._eol, seq(choice($.shape, $.container), $._end))
+      ),
 
     // --------------------------------------------
 
@@ -105,16 +123,6 @@ module.exports = grammar({
         $._root_attribute,
         $.connection,
         $._shape_definition
-      ),
-
-    connection: ($) =>
-      seq(
-        $._shape_path,
-        repeat1(seq($._arrow, $._shape_path)),
-        optional(
-          choice(seq($.dot, $._connection_attribute), seq($._colon, $.label))
-        ),
-        $._end
       ),
 
     _shape_definition: ($) =>
@@ -237,14 +245,14 @@ module.exports = grammar({
 
     _colon: ($) => seq(":"),
 
-    _arrow: ($) => seq(spaces, $.arrow),
+    _arrow: ($) => seq($.arrow),
 
-    arrow: ($) => choice(/-+>/, /--+/, /<-+/, /<-+>/),
+    arrow: ($) => token(prec(PREC.ARROW, choice(/-+>/, /--+/, /<-+/, /<-+>/))),
 
     _dot: ($) => seq($.dot),
     dot: ($) => token("."),
 
-    _unquoted_string: ($) => token(prec(5, /[\w\-]([^'"`\n;{}]*[\w\-])?/)),
+    _unquoted_string: ($) => token(prec(5, /[\w\-?!]([^'"`\n;{}]*[\w\-?!])?/)),
 
     string: ($) =>
       choice(

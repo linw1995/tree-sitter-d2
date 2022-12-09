@@ -2,22 +2,11 @@
 Declare a shape inside a container
 ================================================================================
 foo.baz
-foo.bar.biz
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (container
-    (container_key) (dot)
-    (shape (shape_key))
-  )
-  (container
-    (container_key) (dot)
-    (container
-      (container_key) (dot)
-      (shape (shape_key))
-    )
-  )
+  (container_key) (dot) (shape_key)
 )
 
 ================================================================================
@@ -28,10 +17,7 @@ Use quoted string as a shape key
 --------------------------------------------------------------------------------
 
 (source_file
-  (container
-    (container_key (string)) (dot)
-    (shape (shape_key (string)))
-  )
+  (container_key (string)) (dot) (shape_key (string))
 )
 
 ================================================================================
@@ -49,59 +35,20 @@ foo: {
 --------------------------------------------------------------------------------
 
 (source_file
-  (container
-    (container_key)
+  (shape_key)
+  (block
+    (shape_key)
     (block
-      (container
-        (container_key)
-        (block
-          (container
-            (container_key)
-            (block
-              (shape (shape_key))
-            )
-          )
-        )
+      (shape_key)
+      (block
+        (shape_key)
       )
     )
   )
 )
 
 ================================================================================
-Declare a container with complex keys
-================================================================================
-
-Foo biz bar: {
-  bar biz baz: {
-    -biz-baz-Baz-: {
-      Helo world
-    }
-  }
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (container
-    (container_key)
-    (block
-      (container
-        (container_key)
-        (block
-          (container
-            (container_key)
-            (block
-              (shape (shape_key))
-            )
-          )
-        )
-      )
-    )
-  )
-)
-
-================================================================================
-Declare labeled container inside a labeled container using block
+Declare labaled container inside a labeled container using block
 ================================================================================
 
 foo: Foo {
@@ -115,22 +62,13 @@ foo: Foo {
 --------------------------------------------------------------------------------
 
 (source_file
-  (container
-    (container_key)
-    (label)
+  (shape_key) (label)
+  (block
+    (shape_key) (label)
     (block
-      (container
-        (container_key)
-        (label)
-        (block
-          (container
-            (container_key)
-            (label)
-            (block
-              (shape (shape_key) (label))
-            )
-          )
-        )
+      (shape_key) (label)
+      (block
+        (shape_key) (label)
       )
     )
   )
@@ -149,13 +87,11 @@ foo: {
 --------------------------------------------------------------------------------
 
 (source_file
-  (container
-    (container_key)
-    (block
-      (shape (shape_key))
-      (shape (shape_key))
-      (shape (shape_key))
-    )
+  (shape_key)
+  (block
+    (shape_key)
+    (shape_key)
+    (shape_key)
   )
 )
 
