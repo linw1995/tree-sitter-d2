@@ -450,7 +450,8 @@ grid-columns: 1
 header
 
 body: "" {
-  grid-gap: 0
+  vertical-gap: 0
+  horizontal-gap: 0
   grid-columns: 2
 
   content
@@ -469,6 +470,7 @@ footer
     (container_key)
     (label (string))
     (block
+      (attribute (attr_key) (attr_value (integer)))
       (attribute (attr_key) (attr_value (integer)))
       (attribute (attr_key) (attr_value (integer)))
       (shape (shape_key))

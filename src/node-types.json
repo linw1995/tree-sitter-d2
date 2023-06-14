@@ -445,6 +445,10 @@
     "named": false
   },
   {
+    "type": "horizontal-gap",
+    "named": false
+  },
+  {
     "type": "icon",
     "named": false
   },
@@ -526,6 +530,10 @@
   },
   {
     "type": "underline",
+    "named": false
+  },
+  {
+    "type": "vertical-gap",
     "named": false
   },
   {

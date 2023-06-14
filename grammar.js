@@ -237,7 +237,14 @@ module.exports = grammar({
         seq(alias($._style_attr_key, $.attr_key), $._colon, $.attr_value)
       ),
 
-    _grid_attr_key: ($) => choice("grid-gap", "grid-columns", "grid-rows"),
+    _grid_attr_key: ($) =>
+      choice(
+        "vertical-gap",
+        "horizontal-gap",
+        "grid-gap",
+        "grid-columns",
+        "grid-rows"
+      ),
     _style_attr_key: ($) => choice($._common_style_attr_key, "3d"),
 
     _common_style_attr_key: ($) =>

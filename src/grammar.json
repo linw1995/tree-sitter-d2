@@ -983,6 +983,14 @@
       "members": [
         {
           "type": "STRING",
+          "value": "vertical-gap"
+        },
+        {
+          "type": "STRING",
+          "value": "horizontal-gap"
+        },
+        {
+          "type": "STRING",
           "value": "grid-gap"
         },
         {
