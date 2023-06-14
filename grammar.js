@@ -265,7 +265,8 @@ module.exports = grammar({
         "link",
         "italic",
         "bold",
-        "underline"
+        "underline",
+        "text-transform"
       ),
 
     _text_attr_key: ($) => "near",

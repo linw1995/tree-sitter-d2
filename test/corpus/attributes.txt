@@ -57,6 +57,7 @@ foo.style.shadow: false
 foo.style.multiple: true
 foo.style.animated: true
 foo.style.link: https://to
+foo.style.text-transform: uppercase
 
 --------------------------------------------------------------------------------
 
@@ -71,6 +72,7 @@ foo.style.link: https://to
   (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
   (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
   (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
+  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
   (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
 )
 
@@ -89,6 +91,7 @@ foo.style: {
   multiple: true
   animated: true
   link: https://to
+  text-transform: uppercase
 }
 
 --------------------------------------------------------------------------------
@@ -109,6 +112,7 @@ foo.style: {
         (attribute (attr_key) (attr_value (boolean)))
         (attribute (attr_key) (attr_value (boolean)))
         (attribute (attr_key) (attr_value (boolean)))
+        (attribute (attr_key) (attr_value))
         (attribute (attr_key) (attr_value))
       )
     )

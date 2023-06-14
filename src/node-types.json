@@ -521,6 +521,10 @@
     "named": false
   },
   {
+    "type": "text-transform",
+    "named": false
+  },
+  {
     "type": "tooltip",
     "named": false
   },

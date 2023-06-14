@@ -1086,6 +1086,10 @@
         {
           "type": "STRING",
           "value": "underline"
+        },
+        {
+          "type": "STRING",
+          "value": "text-transform"
         }
       ]
     },
