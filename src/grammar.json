@@ -679,6 +679,10 @@
           "value": "direction"
         },
         {
+          "type": "SYMBOL",
+          "name": "_grid_attr_key"
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "CHOICE",
@@ -804,6 +808,10 @@
           {
             "type": "STRING",
             "value": "height"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_grid_attr_key"
           }
         ]
       }
@@ -969,6 +977,23 @@
           }
         ]
       }
+    },
+    "_grid_attr_key": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "grid-gap"
+        },
+        {
+          "type": "STRING",
+          "value": "grid-columns"
+        },
+        {
+          "type": "STRING",
+          "value": "grid-rows"
+        }
+      ]
     },
     "_style_attr_key": {
       "type": "CHOICE",

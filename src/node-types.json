@@ -429,6 +429,18 @@
     "named": false
   },
   {
+    "type": "grid-columns",
+    "named": false
+  },
+  {
+    "type": "grid-gap",
+    "named": false
+  },
+  {
+    "type": "grid-rows",
+    "named": false
+  },
+  {
     "type": "height",
     "named": false
   },

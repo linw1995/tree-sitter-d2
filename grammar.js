@@ -160,6 +160,7 @@ module.exports = grammar({
     _root_attr_key: ($) =>
       choice(
         "direction",
+        $._grid_attr_key,
         // reserved but doesn't affected for root
         alias(
           choice(
@@ -198,7 +199,8 @@ module.exports = grammar({
           // image
           "icon",
           "width",
-          "height"
+          "height",
+          $._grid_attr_key
         )
       ),
 
@@ -235,6 +237,7 @@ module.exports = grammar({
         seq(alias($._style_attr_key, $.attr_key), $._colon, $.attr_value)
       ),
 
+    _grid_attr_key: ($) => choice("grid-gap", "grid-columns", "grid-rows"),
     _style_attr_key: ($) => choice($._common_style_attr_key, "3d"),
 
     _common_style_attr_key: ($) =>

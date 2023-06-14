@@ -422,7 +422,7 @@ foo -> bar: {
 )
 
 ================================================================================
-Declire style attributes in single-line
+Declare style attributes in single-line
 ================================================================================
 foo.style: {opacity: 0.5; fill: red}
 
@@ -440,4 +440,42 @@ foo.style: {opacity: 0.5; fill: red}
     )
   )
 )
+
+================================================================================
+Declare grid attributes
+================================================================================
+grid-gap: 0
+grid-columns: 1
+
+header
+
+body: "" {
+  grid-gap: 0
+  grid-columns: 2
+
+  content
+  sidebar
+}
+
+footer
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (attribute (attr_key) (attr_value (integer)))
+  (attribute (attr_key) (attr_value (integer)))
+  (shape (shape_key))
+  (container
+    (container_key)
+    (label (string))
+    (block
+      (attribute (attr_key) (attr_value (integer)))
+      (attribute (attr_key) (attr_value (integer)))
+      (shape (shape_key))
+      (shape (shape_key))
+    )
+  )
+  (shape (shape_key))
+)
+
 
