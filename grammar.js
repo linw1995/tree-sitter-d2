@@ -1,3 +1,15 @@
+// mkWrapCont :: string -> string -> ($ -> Rule) -> $ -> Rule
+const mkWrapCont = (start, end) => (getRule) => ($) =>
+  seq(
+    start,
+    repeat(choice($._eol, seq(getRule($), $._end))),
+    optional(seq(getRule($), optional($._end))),
+    end
+  );
+
+const mkBlock = mkWrapCont("{", "}");
+const mkList = mkWrapCont("[", "]");
+
 const PREC = {
   COMMENT: -2,
   EOL: -1,
@@ -79,13 +91,7 @@ module.exports = grammar({
         $.shape_key
       ),
 
-    _connection_block: ($) =>
-      seq(
-        "{",
-        repeat(choice($._eol, seq($._connection_attribute, $._end))),
-        optional(seq($._connection_attribute, optional($._end))),
-        "}"
-      ),
+    _connection_block: mkBlock(($) => $._connection_attribute),
 
     // classes
 
@@ -104,13 +110,7 @@ module.exports = grammar({
         )
       ),
 
-    _classes_block: ($) =>
-      seq(
-        "{",
-        repeat(choice($._eol, seq($._classes_item, $._end))),
-        optional(seq($._classes_item, optional($._end))),
-        "}"
-      ),
+    _classes_block: mkBlock(($) => $._classes_item),
 
     _classes_item: ($) =>
       seq(
@@ -124,13 +124,7 @@ module.exports = grammar({
         )
       ),
 
-    _classes_item_block: ($) =>
-      seq(
-        "{",
-        repeat(choice($._eol, seq($._classes_item_attribute, $._end))),
-        optional(seq($._classes_item_attribute, optional($._end))),
-        "}"
-      ),
+    _classes_item_block: mkBlock(($) => $._classes_item_attribute),
 
     _classes_item_attribute: ($) =>
       choice(
@@ -155,13 +149,7 @@ module.exports = grammar({
         )
       ),
 
-    _container_block: ($) =>
-      seq(
-        "{",
-        repeat(choice($._eol, seq($._container_block_definition, $._end))),
-        optional(seq($._container_block_definition, optional($._end))),
-        "}"
-      ),
+    _container_block: mkBlock(($) => $._container_block_definition),
 
     _container_block_definition: ($) =>
       choice($.shape, $.container, $.connection, $._shape_attribute),
@@ -241,13 +229,7 @@ module.exports = grammar({
     _class_attribute: ($) =>
       seq($.keyword_class, $._colon, choice($.class_list, $._class_name)),
 
-    class_list: ($) =>
-      seq(
-        "[",
-        repeat(choice($._eol, seq($._class_name, $._end))),
-        optional(seq($._class_name, optional($._end))),
-        "]"
-      ),
+    class_list: mkList(($) => $._class_name),
 
     _class_name: ($) => alias($.shape_key, $.class_name),
 
@@ -285,20 +267,9 @@ module.exports = grammar({
         )
       ),
 
-    _style_attribute_block: ($) =>
-      seq(
-        "{",
-        repeat(
-          choice(
-            $._eol,
-            seq(alias($._inner_style_attribute, $.attribute), $._end)
-          )
-        ),
-        optional(
-          seq(alias($._inner_style_attribute, $.attribute), optional($._end))
-        ),
-        "}"
-      ),
+    _style_attribute_block: mkBlock(($) =>
+      alias($._inner_style_attribute, $.attribute)
+    ),
 
     _inner_style_attribute: ($) =>
       prec(
@@ -359,8 +330,7 @@ module.exports = grammar({
         )
       ),
 
-    _connection_arrowhead_block: ($) =>
-      seq("{", repeat(choice($._eol, seq($._shape_attribute, $._end))), "}"),
+    _connection_arrowhead_block: mkBlock(($) => $._shape_attribute),
 
     _connection_arrowhead_attr_key: ($) =>
       choice("source-arrowhead", "target-arrowhead"),
