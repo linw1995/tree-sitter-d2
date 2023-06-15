@@ -27,3 +27,8 @@ parser_config.d2 = {
   filetype = 'd2',
 };
 ```
+
+# Mirrors
+
+- [Git Pleshevski](https://git.pleshevski.ru/pleshevskiy/tree-sitter-d2)
+- [Codeberg](https://codeberg.org/p8i/tree-sitter-d2)
