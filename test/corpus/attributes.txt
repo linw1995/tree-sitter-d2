@@ -62,18 +62,18 @@ foo.style.text-transform: uppercase
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (float)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean)))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
-  (shape (shape_key) (dot) (attribute (attr_key) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (float)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean)))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value))))
+  (shape (shape_key) (dot) (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value))))
 )
 
 ================================================================================
@@ -100,7 +100,7 @@ foo.style: {
   (shape
     (shape_key) (dot)
     (attribute
-      (attr_key)
+      (keyword_style)
       (block
         (attribute (attr_key) (attr_value (float)))
         (attribute (attr_key) (attr_value))
@@ -174,17 +174,17 @@ foo: {
   (container
     (container_key)
     (block
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (float))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value)))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value)))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (integer))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value)))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value (boolean))))
-      (attribute (attr_key) (dot) (attribute (attr_key) (attr_value)))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (float))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value)))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value)))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (integer))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value)))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value (boolean))))
+      (attribute (keyword_style) (dot) (attribute (attr_key) (attr_value)))
     )
   )
 )
@@ -215,7 +215,7 @@ foo: {
     (container_key)
     (block
       (attribute
-        (attr_key)
+        (keyword_style)
         (block
           (attribute (attr_key) (attr_value (float)))
           (attribute (attr_key) (attr_value))
@@ -262,7 +262,7 @@ foo -> bar: {
     (shape_key)
     (block
       (attribute
-        (attr_key)
+        (keyword_style)
         (block
           (attribute (attr_key) (attr_value (float)))
           (attribute (attr_key) (attr_value))
@@ -367,7 +367,7 @@ foo -> bar: {
         (attr_key)
         (block
           (attribute
-            (attr_key)
+            (keyword_style)
             (block
               (attribute (attr_key) (attr_value (float)))
               (attribute (attr_key) (attr_value))
@@ -436,7 +436,7 @@ foo.style: {opacity: 0.5; fill: red}
   (shape
     (shape_key) (dot)
     (attribute
-      (attr_key)
+      (keyword_style)
       (block
         (attribute (attr_key) (attr_value (float)))
         (attribute (attr_key) (attr_value))

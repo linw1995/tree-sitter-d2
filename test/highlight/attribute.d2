@@ -10,7 +10,7 @@ shape: oval
 
 baaaz.style: {
   # <- variable
-  #   ^ property
+  #   ^ keyword
   fill: red
   # <- property
   #     ^ string
@@ -22,12 +22,13 @@ foo: Label {
   #      ^ string
 
   style.fill: red;
-  # <- property
+  # <- keyword
   #     ^ property 
 }
 
 foo: {
   style: {
+  # <- keyword
     opacity: 0.5
     #        ^ float
     fill: red
@@ -54,6 +55,6 @@ foo: Label {
   #     ^ string
 
   style.fill: red
-  # <- property
+  # <- keyword
   #     ^ property 
 }

@@ -1,0 +1,198 @@
+================================================================================
+Declare empty classes keyword in the root
+================================================================================
+classes
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (classes (keyword_classes))
+)
+
+================================================================================
+Declare classes block with item block
+================================================================================
+classes: {
+  foo: {
+    style: {
+      fill: "#44C7B1"
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (classes
+    (keyword_classes)
+    (block
+      (class_name)
+      (class_block
+        (attribute
+          (keyword_style)
+          (block
+            (attribute
+              (attr_key)
+              (attr_value
+                (string (string_fragment))
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+================================================================================
+Declare classes block with item inline
+================================================================================
+classes: {
+  foo.style: {
+    fill: "#44C7B1"
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (classes
+    (keyword_classes)
+    (block
+      (class_name)
+      (dot)
+      (attribute
+        (keyword_style)
+        (block
+          (attribute
+            (attr_key)
+            (attr_value
+              (string (string_fragment))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+================================================================================
+Declare classes inline with item inline
+================================================================================
+classes.foo.style: {
+  fill: "#44C7B1"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (classes
+    (keyword_classes)
+    (dot)
+    (class_name)
+    (dot)
+    (attribute
+      (keyword_style)
+      (block
+        (attribute
+          (attr_key)
+          (attr_value
+            (string (string_fragment))
+          )
+        )
+      )
+    )
+  )
+)
+
+================================================================================
+Declare classes inline with item block
+================================================================================
+classes.foo: {
+  style: {
+    fill: "#44C7B1"
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (classes
+    (keyword_classes)
+    (dot)
+    (class_name)
+    (class_block
+      (attribute
+        (keyword_style)
+        (block
+          (attribute
+            (attr_key)
+            (attr_value
+              (string (string_fragment))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+================================================================================
+Declare shape with a class
+================================================================================
+foo.class: biz
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (shape
+    (shape_key)
+    (dot)
+    (attribute
+      (keyword_class)
+      (class_name)
+    )
+  )
+)
+
+================================================================================
+Declare shape with many classes
+================================================================================
+foo.class: [biz; baz]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (shape
+    (shape_key)
+    (dot)
+    (attribute
+      (keyword_class)
+      (class_list
+        (class_name)
+        (class_name)
+      )
+    )
+  )
+)
+
+================================================================================
+Declare a class in the container
+================================================================================
+foo: {
+  class: biz
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (block
+      (attribute
+        (keyword_class)
+        (class_name)
+      )
+    )
+  )
+)

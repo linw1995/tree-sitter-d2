@@ -70,7 +70,23 @@
           "named": true
         },
         {
+          "type": "class_list",
+          "named": true
+        },
+        {
+          "type": "class_name",
+          "named": true
+        },
+        {
           "type": "dot",
+          "named": true
+        },
+        {
+          "type": "keyword_class",
+          "named": true
+        },
+        {
+          "type": "keyword_style",
           "named": true
         },
         {
@@ -93,11 +109,27 @@
           "named": true
         },
         {
+          "type": "class_block",
+          "named": true
+        },
+        {
+          "type": "class_name",
+          "named": true
+        },
+        {
           "type": "connection",
           "named": true
         },
         {
           "type": "container",
+          "named": true
+        },
+        {
+          "type": "dot",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -111,6 +143,94 @@
     "type": "boolean",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "class_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "class_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "classes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "class_block",
+          "named": true
+        },
+        {
+          "type": "class_name",
+          "named": true
+        },
+        {
+          "type": "dot",
+          "named": true
+        },
+        {
+          "type": "keyword_classes",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "connection",
@@ -288,6 +408,10 @@
           "named": true
         },
         {
+          "type": "classes",
+          "named": true
+        },
+        {
           "type": "connection",
           "named": true
         },
@@ -362,6 +486,14 @@
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {
@@ -459,6 +591,18 @@
   {
     "type": "italic",
     "named": false
+  },
+  {
+    "type": "keyword_class",
+    "named": true
+  },
+  {
+    "type": "keyword_classes",
+    "named": true
+  },
+  {
+    "type": "keyword_style",
+    "named": true
   },
   {
     "type": "label",

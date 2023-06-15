@@ -6,6 +6,7 @@ const PREC = {
   CONTAINER: 2,
   CONNECTION: 2,
   SHAPE: 3,
+  CLASSES: 4,
   IDENTIFIER: 0,
   ARROW: 0,
   ATTRIBUTE: 0,
@@ -33,6 +34,9 @@ module.exports = grammar({
     [$._container_block],
     [$._connection_block],
     [$._style_attribute_block],
+    [$._classes_block],
+    [$._classes_item_block],
+    [$.class_list],
   ],
 
   rules: {
@@ -44,6 +48,7 @@ module.exports = grammar({
         seq(
           choice(
             alias($._root_attribute, $.attribute),
+            $.classes,
             $.shape,
             $.container,
             $.connection
@@ -82,6 +87,57 @@ module.exports = grammar({
         "}"
       ),
 
+    // classes
+
+    classes: ($) =>
+      prec(
+        PREC.CLASSES,
+        seq(
+          $.keyword_classes,
+          choice(
+            optional(seq($.dot, $._classes_item)),
+            seq(
+              optional(seq($._colon, optional($.label))),
+              optional(alias($._classes_block, $.block))
+            )
+          )
+        )
+      ),
+
+    _classes_block: ($) =>
+      seq(
+        "{",
+        repeat(choice($._eol, seq($._classes_item, $._end))),
+        optional(seq($._classes_item, optional($._end))),
+        "}"
+      ),
+
+    _classes_item: ($) =>
+      seq(
+        $._class_name,
+        choice(
+          optional(seq($.dot, $._shape_attribute)),
+          seq(
+            optional(seq($._colon, optional($.label))),
+            optional(alias($._classes_item_block, $.class_block))
+          )
+        )
+      ),
+
+    _classes_item_block: ($) =>
+      seq(
+        "{",
+        repeat(choice($._eol, seq($._classes_item_attribute, $._end))),
+        optional(seq($._classes_item_attribute, optional($._end))),
+        "}"
+      ),
+
+    _classes_item_attribute: ($) =>
+      choice(
+        alias($._base_shape_attribute, $.attribute),
+        alias($._style_attribute, $.attribute)
+      ),
+
     // containers
 
     container: ($) =>
@@ -93,7 +149,7 @@ module.exports = grammar({
             seq($.dot, choice($.shape, $.container)),
             seq(
               optional(seq($._colon, optional($.label))),
-              optional(seq(alias($._container_block, $.block)))
+              optional(alias($._container_block, $.block))
             )
           )
         )
@@ -119,8 +175,8 @@ module.exports = grammar({
           $.shape_key,
           optional(
             choice(
-              seq($.dot, alias($._style_attribute, $.attribute)),
-              seq(optional(seq($._colon, choice($.label, $.text_block))))
+              seq($.dot, $._shape_attribute),
+              seq($._colon, choice($.label, $.text_block))
             )
           )
         )
@@ -168,7 +224,7 @@ module.exports = grammar({
             "label",
             "constraint",
             "icon",
-            "style",
+            $.keyword_style,
             $._common_style_attr_key,
             $._text_attr_key
           ),
@@ -177,10 +233,23 @@ module.exports = grammar({
       ),
 
     _shape_attribute: ($) =>
-      choice(
-        alias($._base_shape_attribute, $.attribute),
-        alias($._style_attribute, $.attribute)
+      alias(
+        choice($._class_attribute, $._base_shape_attribute, $._style_attribute),
+        $.attribute
       ),
+
+    _class_attribute: ($) =>
+      seq($.keyword_class, $._colon, choice($.class_list, $._class_name)),
+
+    class_list: ($) =>
+      seq(
+        "[",
+        repeat(choice($._eol, seq($._class_name, $._end))),
+        optional(seq($._class_name, optional($._end))),
+        "]"
+      ),
+
+    _class_name: ($) => alias($.shape_key, $.class_name),
 
     _base_shape_attribute: ($) =>
       seq(alias($._shape_attr_key, $.attr_key), $._colon, $.attr_value),
@@ -208,7 +277,7 @@ module.exports = grammar({
       prec(
         PREC.ATTRIBUTE,
         seq(
-          alias("style", $.attr_key),
+          $.keyword_style,
           choice(
             seq($.dot, alias($._inner_style_attribute, $.attribute)),
             seq($._colon, alias($._style_attribute_block, $.block))
@@ -245,6 +314,7 @@ module.exports = grammar({
         "grid-columns",
         "grid-rows"
       ),
+
     _style_attr_key: ($) => choice($._common_style_attr_key, "3d"),
 
     _common_style_attr_key: ($) =>
@@ -294,6 +364,10 @@ module.exports = grammar({
 
     _connection_arrowhead_attr_key: ($) =>
       choice("source-arrowhead", "target-arrowhead"),
+
+    keyword_classes: (_) => "classes",
+    keyword_class: (_) => "class",
+    keyword_style: (_) => "style",
 
     //
 
