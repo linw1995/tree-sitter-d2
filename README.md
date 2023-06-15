@@ -8,7 +8,9 @@ References:
 
 ## Highlights
 
-![screenshot](./assets/screenshot.png)
+![screenshot_1](./assets/screenshot_1.png)
+
+![screenshot_2](./assets/screenshot_2.png)
 
 # Install
 
