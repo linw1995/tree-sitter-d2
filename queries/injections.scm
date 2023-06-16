@@ -1,7 +1,7 @@
 ; for tree-sitter
 
 (
-  (text_block (raw_text) @injection.content)
+  (text_block . (raw_text) @injection.content)
   (#set! injection.language "markdown")
 )
 
@@ -10,6 +10,16 @@
   (raw_text) @injection.content
 )
 
+(
+  (line_comment) @injection.content
+  (#set! @injection.language "comment")
+)
+(
+  (block_comment) @injection.content
+  (#set! @injection.language "comment")
+)
+
+;; -------------------------------------
 ;; overwrite for nvim-treesitter
 ; use markdown as default
 (text_block . (raw_text) @markdown)
@@ -34,3 +44,5 @@
 )
 
 (line_comment) @comment
+(block_comment) @comment
+
