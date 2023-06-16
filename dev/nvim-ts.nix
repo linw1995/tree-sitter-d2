@@ -38,6 +38,16 @@ let
       },
     })
 
+    -- Fold level
+    vim.opt.foldlevel = 99
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldminlines = 1
+    vim.opt.foldnestmax = 5
+    vim.opt.foldmethod = "expr"
+    vim.cmd([[
+      set foldexpr=nvim_treesitter#foldexpr()
+    ]])
+
     vim.g.catppuccin_flavour = "frappe"
     require("catppuccin").setup()
     vim.cmd([[colorscheme catppuccin]])
