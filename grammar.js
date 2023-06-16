@@ -188,7 +188,7 @@ module.exports = grammar({
         )
       ),
 
-    shape_key: ($) => choice($.string, $._identifier),
+    shape_key: ($) => choice($.keyword_underscore, $.string, $._identifier),
 
     _identifier: ($) =>
       seq(
@@ -348,6 +348,7 @@ module.exports = grammar({
     _connection_arrowhead_attr_key: ($) =>
       choice("source-arrowhead", "target-arrowhead"),
 
+    keyword_underscore: (_) => "_",
     keyword_classes: (_) => "classes",
     keyword_class: (_) => "class",
     keyword_style: (_) => "style",

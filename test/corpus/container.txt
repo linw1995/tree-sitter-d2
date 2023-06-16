@@ -267,3 +267,25 @@ primty: Primitive types {
     )
   )
 )
+
+================================================================================
+Declare a container with a references to the parent container
+================================================================================
+container: {
+  _.foo: baz
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (block
+      (container
+        (container_key (keyword_underscore))
+        (dot)
+        (shape (shape_key) (label))
+      )
+    )
+  )
+)

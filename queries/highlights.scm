@@ -4,12 +4,15 @@
 (shape_key) @variable
 (attr_key) @property
 (reserved) @error
+(class_name) @constant
+
 [
   (keyword_style)
   (keyword_classes)
   (keyword_class)
 ] @keyword
-(class_name) @constant
+
+(keyword_underscore) @keyword.return
 
 ; Literals
 ;-------------------------------------------------------------------------------

@@ -187,6 +187,10 @@
           "named": true
         },
         {
+          "type": "keyword_underscore",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -231,11 +235,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "comment",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "connection",
@@ -320,6 +319,10 @@
           "named": true
         },
         {
+          "type": "keyword_underscore",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -395,6 +398,10 @@
       "types": [
         {
           "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "keyword_underscore",
           "named": true
         },
         {
@@ -514,6 +521,10 @@
     "named": true
   },
   {
+    "type": "block_comment",
+    "named": true
+  },
+  {
     "type": "bold",
     "named": false
   },
@@ -614,11 +625,19 @@
     "named": true
   },
   {
+    "type": "keyword_underscore",
+    "named": true
+  },
+  {
     "type": "label",
     "named": false
   },
   {
     "type": "language",
+    "named": true
+  },
+  {
+    "type": "line_comment",
     "named": true
   },
   {
