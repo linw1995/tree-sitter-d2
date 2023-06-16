@@ -27,9 +27,11 @@
 ; Comments
 ;-------------------------------------------------------------------------------
 
-(language) @comment
-(line_comment) @comment.line
-(block_comment) @comment.block
+[
+  (language)
+  (line_comment)
+  (block_comment)
+] @comment
 
 ; Punctiation
 ;-------------------------------------------------------------------------------

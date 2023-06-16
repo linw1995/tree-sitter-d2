@@ -233,6 +233,11 @@
     }
   },
   {
+    "type": "comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "connection",
     "named": true,
     "fields": {},
@@ -509,10 +514,6 @@
     "named": true
   },
   {
-    "type": "block_comment",
-    "named": true
-  },
-  {
     "type": "bold",
     "named": false
   },
@@ -618,10 +619,6 @@
   },
   {
     "type": "language",
-    "named": true
-  },
-  {
-    "type": "line_comment",
     "named": true
   },
   {
