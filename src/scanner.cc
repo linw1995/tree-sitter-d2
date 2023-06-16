@@ -54,19 +54,25 @@ namespace {
       lexer->advance(lexer, true);
     }
 
+    void skip_whitespaces(TSLexer *lexer) {
+      while (lexer->lookahead != 0 && iswspace(lexer->lookahead)) {
+        skip(lexer);
+      }
+    }
+
     bool is_text_block_end(TSLexer *lexer) {
-        vector<int16_t>::reverse_iterator
-          iter = escape_char_stack.rbegin(),
-          end = escape_char_stack.rend();
+      vector<int16_t>::reverse_iterator
+        iter = escape_char_stack.rbegin(),
+        end = escape_char_stack.rend();
 
-        for (; iter != end; ++iter) {
-          if (lexer->lookahead != *iter) {
-            return false;
-          }
-          advance(lexer);
+      for (; iter != end; ++iter) {
+        if (lexer->lookahead != *iter) {
+          return false;
         }
+        advance(lexer);
+      }
 
-        return true;
+      return true;
     }
 
     bool is_triple_double_quote(TSLexer *lexer) {
@@ -85,9 +91,7 @@ namespace {
         lexer->result_symbol = TEXT_BLOCK_START;
         lexer->mark_end(lexer);
 
-        while (lexer->lookahead != 0 && iswspace(lexer->lookahead)) {
-          skip(lexer);
-        }
+        skip_whitespaces(lexer);
 
         if (lexer->lookahead != '|') {
           return false;
@@ -114,9 +118,7 @@ namespace {
         lexer->result_symbol = TEXT_BLOCK_END;
         lexer->mark_end(lexer);
 
-        while (lexer->lookahead != 0 && iswspace(lexer->lookahead)) {
-          skip(lexer);
-        }
+        skip_whitespaces(lexer);
 
         if (is_text_block_end(lexer)) {
           lexer->mark_end(lexer);
@@ -137,6 +139,7 @@ namespace {
         lexer->result_symbol = BLOCK_COMMENT;
         lexer->mark_end(lexer);
 
+        skip_whitespaces(lexer);
         // Check start of block comment
         if (!is_triple_double_quote(lexer)) {
           return false;
