@@ -298,6 +298,7 @@ module.exports = grammar({
         "stroke-dash",
         "border-radius",
         "double-border",
+        "font",
         "font-size",
         "font-color",
         "shadow",

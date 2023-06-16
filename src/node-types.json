@@ -553,6 +553,10 @@
     "named": true
   },
   {
+    "type": "font",
+    "named": false
+  },
+  {
     "type": "font-color",
     "named": false
   },

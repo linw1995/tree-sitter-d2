@@ -1463,6 +1463,10 @@
         },
         {
           "type": "STRING",
+          "value": "font"
+        },
+        {
+          "type": "STRING",
           "value": "font-size"
         },
         {
