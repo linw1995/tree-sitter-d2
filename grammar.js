@@ -1,15 +1,3 @@
-// mkWrapCont :: string -> string -> ($ -> Rule) -> $ -> Rule
-const mkWrapCont = (start, end) => (getRule) => ($) =>
-  seq(
-    start,
-    repeat(choice($._eol, seq(getRule($), $._end))),
-    optional(seq(getRule($), optional($._end))),
-    end
-  );
-
-const mkBlock = mkWrapCont("{", "}");
-const mkList = mkWrapCont("[", "]");
-
 const PREC = {
   COMMENT: -2,
   EOL: -1,
@@ -24,6 +12,28 @@ const PREC = {
   ATTRIBUTE: 0,
   ATTRIBUTE_KEY: 0,
 };
+
+// mkWrapCont :: string -> string -> ($ -> Rule) -> $ -> Rule
+const mkWrapCont = (start, end) => (onDefinition) => ($) =>
+  seq(
+    start,
+    repeat(choice($._eol, seq(onDefinition($), $._end))),
+    optional(seq(onDefinition($), optional($._end))),
+    end
+  );
+const mkBlock = mkWrapCont("{", "}");
+const mkList = mkWrapCont("[", "]");
+
+// mkAlias :: ($ -> Rule) -> ($ -> Rule) -> $ -> Rule
+const mkAlias = (onAlias) => (onValue) => ($) => alias(onValue($), onAlias($));
+const attrKeyAlias = mkAlias(($) => $.attr_key);
+const attrAlias = mkAlias(($) => $.attribute);
+
+// mkAttrCont :: ($ -> Rule) -> ($ -> Rule) -> $ -> Rule
+const mkAttrCont = (onValue) => (onKey) => ($) =>
+  seq(onKey($), $._colon, onValue($));
+const mkBaseAttr = (onKey) =>
+  mkAttrCont(($) => $.attr_value)(attrKeyAlias(onKey));
 
 module.exports = grammar({
   name: "d2",
@@ -49,6 +59,7 @@ module.exports = grammar({
     [$._classes_block],
     [$._classes_item_block],
     [$.class_list],
+    [$._text_block_attrs],
   ],
 
   rules: {
@@ -126,11 +137,9 @@ module.exports = grammar({
 
     _classes_item_block: mkBlock(($) => $._classes_item_attribute),
 
-    _classes_item_attribute: ($) =>
-      choice(
-        alias($._base_shape_attribute, $.attribute),
-        alias($._style_attribute, $.attribute)
-      ),
+    _classes_item_attribute: attrAlias(($) =>
+      choice($._base_shape_attribute, $._style_attribute)
+    ),
 
     // containers
 
@@ -164,7 +173,16 @@ module.exports = grammar({
           optional(
             choice(
               seq($.dot, $._shape_attribute),
-              seq($._colon, choice($.label, $.text_block))
+              seq(
+                $._colon,
+                choice(
+                  $.label,
+                  seq(
+                    $.text_block,
+                    optional(alias($._text_block_attrs, $.block))
+                  )
+                )
+              )
             )
           )
         )
@@ -194,12 +212,13 @@ module.exports = grammar({
         alias($._text_block_end, "|")
       ),
 
+    _text_block_attrs: mkBlock(attrAlias(($) => $._text_shape_attribute)),
+
     language: ($) => /\w+/,
 
     // attributes
 
-    _root_attribute: ($) =>
-      seq(alias($._root_attr_key, $.attr_key), $._colon, $.attr_value),
+    _root_attribute: mkBaseAttr(($) => $._root_attr_key),
 
     _root_attr_key: ($) =>
       choice(
@@ -220,21 +239,19 @@ module.exports = grammar({
         )
       ),
 
-    _shape_attribute: ($) =>
-      alias(
-        choice($._class_attribute, $._base_shape_attribute, $._style_attribute),
-        $.attribute
-      ),
+    _shape_attribute: attrAlias(($) =>
+      choice($._class_attribute, $._base_shape_attribute, $._style_attribute)
+    ),
 
-    _class_attribute: ($) =>
-      seq($.keyword_class, $._colon, choice($.class_list, $._class_name)),
+    _class_attribute: mkAttrCont(($) => choice($.class_list, $._class_name))(
+      ($) => $.keyword_class
+    ),
 
     class_list: mkList(($) => $._class_name),
 
     _class_name: ($) => alias($.shape_key, $.class_name),
 
-    _base_shape_attribute: ($) =>
-      seq(alias($._shape_attr_key, $.attr_key), $._colon, $.attr_value),
+    _base_shape_attribute: mkBaseAttr(($) => $._shape_attr_key),
 
     _shape_attr_key: ($) =>
       prec(
@@ -251,6 +268,7 @@ module.exports = grammar({
           "icon",
           "width",
           "height",
+          $._text_attr_key,
           $._grid_attr_key
         )
       ),
@@ -267,15 +285,9 @@ module.exports = grammar({
         )
       ),
 
-    _style_attribute_block: mkBlock(($) =>
-      alias($._inner_style_attribute, $.attribute)
-    ),
+    _style_attribute_block: mkBlock(attrAlias(($) => $._inner_style_attribute)),
 
-    _inner_style_attribute: ($) =>
-      prec(
-        PREC.ATTRIBUTE,
-        seq(alias($._style_attr_key, $.attr_key), $._colon, $.attr_value)
-      ),
+    _inner_style_attribute: mkBaseAttr(($) => $._style_attr_key),
 
     _grid_attr_key: ($) =>
       choice(
@@ -311,13 +323,13 @@ module.exports = grammar({
         "text-transform"
       ),
 
+    _text_shape_attribute: mkBaseAttr(($) => $._text_attr_key),
+
     _text_attr_key: ($) => "near",
 
-    _connection_attribute: ($) =>
-      choice(
-        alias($._connection_arrowhead_attribute, $.attribute),
-        alias($._style_attribute, $.attribute)
-      ),
+    _connection_attribute: attrAlias(($) =>
+      choice($._connection_arrowhead_attribute, $._style_attribute)
+    ),
 
     _connection_arrowhead_attribute: ($) =>
       seq(
