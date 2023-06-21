@@ -488,4 +488,30 @@ footer
   (shape (shape_key))
 )
 
+================================================================================
+Declare a attribute with many values
+================================================================================
+block: {
+  constraint: primary_key
+  constraint: [primary_key]
+  constraint: [primary_key; unique]
+  constraint: [
+    primary_key
+    unique
+  ]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (container
+    (container_key)
+    (block
+      (attribute (attr_key) (attr_value))
+      (attribute (attr_key) (attr_value_list (attr_value)))
+      (attribute (attr_key) (attr_value_list (attr_value) (attr_value)))
+      (attribute (attr_key) (attr_value_list (attr_value) (attr_value)))
+    )
+  )
+)
 

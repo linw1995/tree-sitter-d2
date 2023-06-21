@@ -32,8 +32,16 @@ const attrAlias = mkAlias(($) => $.attribute);
 // mkAttrCont :: ($ -> Rule) -> ($ -> Rule) -> $ -> Rule
 const mkAttrCont = (onValue) => (onKey) => ($) =>
   seq(onKey($), $._colon, onValue($));
-const mkBaseAttr = (onKey) =>
-  mkAttrCont(($) => $.attr_value)(attrKeyAlias(onKey));
+const mkAttr = (onKey) => mkAttrCont(($) => $.attr_value)(attrKeyAlias(onKey));
+const mkListAttr = (onKey) =>
+  mkAttrCont(
+    either(
+      ($) => $.attr_value_list,
+      ($) => $.attr_value
+    )
+  )(attrKeyAlias(onKey));
+
+const either = (onLeft, onRight) => ($) => choice(onLeft($), onRight($));
 
 module.exports = grammar({
   name: "d2",
@@ -59,6 +67,7 @@ module.exports = grammar({
     [$._classes_block],
     [$._classes_item_block],
     [$.class_list],
+    [$.attr_value_list],
     [$._text_block_attrs],
   ],
 
@@ -216,7 +225,7 @@ module.exports = grammar({
 
     // attributes
 
-    _root_attribute: mkBaseAttr(($) => $._root_attr_key),
+    _root_attribute: mkAttr(($) => $._root_attr_key),
 
     _root_attr_key: ($) =>
       choice(
@@ -249,7 +258,10 @@ module.exports = grammar({
 
     _class_name: ($) => alias($.shape_key, $.class_name),
 
-    _base_shape_attribute: mkBaseAttr(($) => $._shape_attr_key),
+    _base_shape_attribute: either(
+      mkListAttr(($) => $._shape_list_attr_key),
+      mkAttr(($) => $._shape_attr_key)
+    ),
 
     _shape_attr_key: ($) =>
       prec(
@@ -260,9 +272,6 @@ module.exports = grammar({
           "label",
           "link",
           "tooltip",
-          // sql
-          "constraint",
-          // image
           "icon",
           "width",
           "height",
@@ -270,6 +279,8 @@ module.exports = grammar({
           $._grid_attr_key
         )
       ),
+
+    _shape_list_attr_key: ($) => prec(PREC.ATTRIBUTE_KEY, "constraint"),
 
     _style_attribute: ($) =>
       prec(
@@ -285,7 +296,7 @@ module.exports = grammar({
 
     _style_attribute_block: mkBlock(attrAlias(($) => $._inner_style_attribute)),
 
-    _inner_style_attribute: mkBaseAttr(($) => $._style_attr_key),
+    _inner_style_attribute: mkAttr(($) => $._style_attr_key),
 
     _grid_attr_key: ($) =>
       choice(
@@ -321,7 +332,7 @@ module.exports = grammar({
         "text-transform"
       ),
 
-    _text_shape_attribute: mkBaseAttr(($) => $._text_attr_key),
+    _text_shape_attribute: mkAttr(($) => $._text_attr_key),
 
     _text_attr_key: ($) => "near",
 
@@ -355,6 +366,8 @@ module.exports = grammar({
 
     label: ($) => choice($.string, $._unquoted_string),
 
+    attr_value_list: mkList(($) => $.attr_value),
+
     attr_value: ($) =>
       seq(choice($.boolean, $.integer, $.float, $.string, $._unquoted_string)),
 
@@ -375,7 +388,7 @@ module.exports = grammar({
           token(
             prec(
               PREC.UNQUOTED_STRING,
-              /[^'"`\\|\n\s;{}]([^\\\n;{}]*[^\\\n\s;{}])?/
+              /[^'"`\\|\n\s;{}\[\]]([^\\\n;{}\[\]]*[^\\\n\s;{}\[\]])?/
             )
           )
         )

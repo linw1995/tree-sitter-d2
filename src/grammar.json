@@ -1251,24 +1251,60 @@
       "value": "class_name"
     },
     "_base_shape_attribute": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_shape_attr_key"
-          },
-          "named": true,
-          "value": "attr_key"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_shape_list_attr_key"
+              },
+              "named": true,
+              "value": "attr_key"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_colon"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "attr_value_list"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "attr_value"
+                }
+              ]
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_colon"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "attr_value"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_shape_attr_key"
+              },
+              "named": true,
+              "value": "attr_key"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_colon"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "attr_value"
+            }
+          ]
         }
       ]
     },
@@ -1300,10 +1336,6 @@
           },
           {
             "type": "STRING",
-            "value": "constraint"
-          },
-          {
-            "type": "STRING",
             "value": "icon"
           },
           {
@@ -1323,6 +1355,14 @@
             "name": "_grid_attr_key"
           }
         ]
+      }
+    },
+    "_shape_list_attr_key": {
+      "type": "PREC",
+      "value": 0,
+      "content": {
+        "type": "STRING",
+        "value": "constraint"
       }
     },
     "_style_attribute": {
@@ -1843,6 +1883,73 @@
         }
       ]
     },
+    "attr_value_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_eol"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "attr_value"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_end"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "attr_value"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_end"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
     "attr_value": {
       "type": "SEQ",
       "members": [
@@ -1940,7 +2047,7 @@
               "value": -1,
               "content": {
                 "type": "PATTERN",
-                "value": "[^'\"`\\\\|\\n\\s;{}]([^\\\\\\n;{}]*[^\\\\\\n\\s;{}])?"
+                "value": "[^'\"`\\\\|\\n\\s;{}\\[\\]]([^\\\\\\n;{}\\[\\]]*[^\\\\\\n\\s;{}\\[\\]])?"
               }
             }
           }
@@ -2166,6 +2273,9 @@
     ],
     [
       "class_list"
+    ],
+    [
+      "attr_value_list"
     ],
     [
       "_text_block_attrs"

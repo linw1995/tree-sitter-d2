@@ -46,6 +46,21 @@
     }
   },
   {
+    "type": "attr_value_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attr_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "attribute",
     "named": true,
     "fields": {},
@@ -59,6 +74,10 @@
         },
         {
           "type": "attr_value",
+          "named": true
+        },
+        {
+          "type": "attr_value_list",
           "named": true
         },
         {

@@ -158,11 +158,22 @@ foo.class: biz
 ================================================================================
 Declare shape with many classes
 ================================================================================
+fee.class: [biz]
 foo.class: [biz; baz]
 
 --------------------------------------------------------------------------------
 
 (source_file
+  (shape
+    (shape_key)
+    (dot)
+    (attribute
+      (keyword_class)
+      (class_list
+        (class_name)
+      )
+    )
+  )
   (shape
     (shape_key)
     (dot)
@@ -181,6 +192,12 @@ Declare a class in the container
 ================================================================================
 foo: {
   class: biz
+  class: [biz]
+  class: [biz; baz]
+  class: [
+    biz
+    baz
+  ]
 }
 
 --------------------------------------------------------------------------------
@@ -192,6 +209,26 @@ foo: {
       (attribute
         (keyword_class)
         (class_name)
+      )
+      (attribute
+        (keyword_class)
+        (class_list
+          (class_name)
+        )
+      )
+      (attribute
+        (keyword_class)
+        (class_list
+          (class_name)
+          (class_name)
+        )
+      )
+      (attribute
+        (keyword_class)
+        (class_list
+          (class_name)
+          (class_name)
+        )
       )
     )
   )
