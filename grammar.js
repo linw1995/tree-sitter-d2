@@ -69,6 +69,7 @@ module.exports = grammar({
     [$.class_list],
     [$.attr_value_list],
     [$._text_block_attrs],
+    [$._identifier],
   ],
 
   rules: {
@@ -93,11 +94,23 @@ module.exports = grammar({
 
     connection: ($) =>
       seq(
-        $._connection_path,
-        repeat1(seq($.arrow, $._connection_path)),
+        choice(
+          $._full_connection_path,
+          alias($._referencing_full_connection_path, $.referencing)
+        ),
         optional(seq($._colon, optional($.label))),
         optional(seq(alias($._connection_block, $.block)))
       ),
+
+    _referencing_full_connection_path: ($) =>
+      seq("(", $._full_connection_path, $._referencing_end, optional($.index)),
+
+    _referencing_end: ($) => token(prec(PREC.IDENTIFIER + 1, ")")),
+
+    index: ($) => seq("[", $.integer, "]"),
+
+    _full_connection_path: ($) =>
+      seq($._connection_path, repeat1(seq($.arrow, $._connection_path))),
 
     _connection_path: ($) =>
       seq(
@@ -201,11 +214,17 @@ module.exports = grammar({
         repeat(
           choice(
             $.escape_sequence,
-            token(prec(PREC.IDENTIFIER, /[\w\d'"$(),]+/)),
-            token(prec(PREC.IDENTIFIER, /( +|-)[\w\d'"$()]+/))
+            token(prec(PREC.IDENTIFIER, /[\w\d'"$(,]+/)),
+            token(prec(PREC.IDENTIFIER, /( +|-)[\w\d'"$(]+/)),
+            token(prec(PREC.IDENTIFIER, ")"))
           )
         ),
-        optional(token(prec(PREC.IDENTIFIER, /[\w\d'"$()]+/))),
+        optional(
+          choice(
+            token(prec(PREC.IDENTIFIER, /[\w\d'"$(]+/)),
+            token(prec(PREC.IDENTIFIER + 1, ")"))
+          )
+        ),
         optional($._dash)
       ),
 

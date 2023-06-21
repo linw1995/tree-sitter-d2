@@ -248,7 +248,7 @@ Connection with espaced key fragments
 
 
 ================================================================================
-Connection with espaced key fragments
+Diclare a connection with espaced key fragments
 ================================================================================
 \#hello\[\] -- \[world\]
 
@@ -265,6 +265,114 @@ Connection with espaced key fragments
     (shape_key
       (escape_sequence)
       (escape_sequence)
+    )
+  )
+)
+
+================================================================================
+Declare a referencing connection 
+================================================================================
+(x() -> y())
+(x() -> y())[0]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+    )
+  )
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+      (index (integer))
+    )
+  )
+)
+
+================================================================================
+Declare a referencing connection with label
+================================================================================
+(x -> y): label
+(x -> y)[0]: label
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+    )
+    (label)
+  )
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+      (index (integer))
+    )
+    (label)
+  )
+)
+
+================================================================================
+Declare a referencing connection with block
+================================================================================
+(x() -> y()): {
+  style.stroke: \#ff0000
+}
+(x -> y)[0]: {
+  style.stroke: \#ff0000
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+    )
+    (block
+      (attribute
+        (keyword_style)
+        (dot)
+        (attribute
+          (attr_key)
+          (attr_value
+            (escape_sequence)
+          )
+        )
+      )
+    )
+  )
+  (connection
+    (referencing
+      (shape_key)
+      (arrow)
+      (shape_key)
+      (index (integer))
+    )
+    (block
+      (attribute
+        (keyword_style)
+        (dot)
+        (attribute
+          (attr_key)
+          (attr_value
+            (escape_sequence)
+          )
+        )
+      )
     )
   )
 )
