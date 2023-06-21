@@ -441,6 +441,6 @@ module.exports = grammar({
     line_comment: ($) => token(prec(PREC.COMMENT, seq("#", /.*/))),
 
     _eol: ($) => token(prec(PREC.EOL, "\n")),
-    _end: ($) => seq(choice(";", $._eol)),
+    _end: ($) => choice(";", $._eol),
   },
 });
