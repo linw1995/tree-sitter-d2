@@ -245,3 +245,26 @@ Connection with espaced key fragments
     )
   )
 )
+
+
+================================================================================
+Connection with espaced key fragments
+================================================================================
+\#hello\[\] -- \[world\]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (connection
+    (shape_key
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+    )
+    (arrow)
+    (shape_key
+      (escape_sequence)
+      (escape_sequence)
+    )
+  )
+)

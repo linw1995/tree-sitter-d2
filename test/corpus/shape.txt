@@ -3,11 +3,19 @@ Declare unquoted shape identifier with escape sequence (issue #21)
 ================================================================================
 hello\[world\]
 \#ello\[world\]
+\#    helloello\[world\]
 --------------------------------------------------------------------------------
 
 (source_file
   (shape
     (shape_key
+      (escape_sequence)
+      (escape_sequence)
+    )
+  )
+  (shape
+    (shape_key
+      (escape_sequence)
       (escape_sequence)
       (escape_sequence)
     )

@@ -2155,7 +2155,7 @@
       }
     },
     "escape_sequence": {
-      "type": "IMMEDIATE_TOKEN",
+      "type": "TOKEN",
       "content": {
         "type": "SEQ",
         "members": [

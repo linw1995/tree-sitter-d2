@@ -419,7 +419,7 @@ module.exports = grammar({
     _unescaped_double_string_fragment: ($) => token.immediate(/[^"\\\n]+/),
 
     escape_sequence: ($) =>
-      token.immediate(
+      token(
         seq(
           "\\",
           choice(
