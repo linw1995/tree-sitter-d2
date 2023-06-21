@@ -89,66 +89,58 @@
           }
         },
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
+                  "type": "SEQ",
                   "members": [
                     {
-                      "type": "SEQ",
+                      "type": "SYMBOL",
+                      "name": "_colon"
+                    },
+                    {
+                      "type": "CHOICE",
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "_colon"
+                          "name": "label"
                         },
                         {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "SYMBOL",
-                              "name": "label"
-                            },
-                            {
-                              "type": "BLANK"
-                            }
-                          ]
+                          "type": "BLANK"
                         }
                       ]
-                    },
-                    {
-                      "type": "BLANK"
                     }
                   ]
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "ALIAS",
-                          "content": {
-                            "type": "SYMBOL",
-                            "name": "_connection_block"
-                          },
-                          "named": true,
-                          "value": "block"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
+                  "type": "BLANK"
                 }
               ]
             },
             {
-              "type": "BLANK"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_connection_block"
+                      },
+                      "named": true,
+                      "value": "block"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }

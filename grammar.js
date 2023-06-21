@@ -86,11 +86,9 @@ module.exports = grammar({
       seq(
         $._connection_path,
         repeat1(seq($.arrow, $._connection_path)),
-        optional(
-          seq(
-            optional(seq($._colon, optional($.label))),
-            optional(seq(alias($._connection_block, $.block)))
-          )
+        seq(
+          optional(seq($._colon, optional($.label))),
+          optional(seq(alias($._connection_block, $.block)))
         )
       ),
 
