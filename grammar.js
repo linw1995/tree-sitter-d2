@@ -95,10 +95,8 @@ module.exports = grammar({
       seq(
         $._connection_path,
         repeat1(seq($.arrow, $._connection_path)),
-        seq(
-          optional(seq($._colon, optional($.label))),
-          optional(seq(alias($._connection_block, $.block)))
-        )
+        optional(seq($._colon, optional($.label))),
+        optional(seq(alias($._connection_block, $.block)))
       ),
 
     _connection_path: ($) =>
@@ -370,13 +368,13 @@ module.exports = grammar({
     attr_value_list: mkList(($) => $.attr_value),
 
     attr_value: ($) =>
-      seq(choice($.boolean, $.integer, $.float, $.string, $._unquoted_string)),
+      choice($.boolean, $.integer, $.float, $.string, $._unquoted_string),
 
     // --------------------------------------------
 
     _dash: ($) => token.immediate("-"),
 
-    _colon: ($) => seq(":"),
+    _colon: ($) => token(":"),
 
     arrow: ($) => token(prec(PREC.ARROW, choice(/-+>/, /--+/, /<-+/, /<-+>/))),
 
