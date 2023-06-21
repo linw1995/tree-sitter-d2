@@ -199,14 +199,15 @@ module.exports = grammar({
 
     _identifier: ($) =>
       seq(
-        choice(/[\w\d$-]/, $.escape_sequence),
+        choice(token(prec(PREC.IDENTIFIER, /[\w\d$-]/)), $.escape_sequence),
         repeat(
           choice(
             $.escape_sequence,
-            token(prec(PREC.IDENTIFIER, /([\w\d'"$(),]+)?( +|-)[\w\d'"$()]+/))
+            token(prec(PREC.IDENTIFIER, /[\w\d'"$(),]+/)),
+            token(prec(PREC.IDENTIFIER, /( +|-)[\w\d'"$()]+/))
           )
         ),
-        optional(/[\w\d'"$()]+/),
+        optional(token(prec(PREC.IDENTIFIER, /[\w\d'"$()]+/))),
         optional($._dash)
       ),
 
@@ -388,7 +389,7 @@ module.exports = grammar({
           token(
             prec(
               PREC.UNQUOTED_STRING,
-              /[^'"`\\|\n\s;{}\[\]]([^\\\n;{}\[\]]*[^\\\n\s;{}\[\]])?/
+              /[^'"`\\|\n\s;{}\[\]][^\\\n;{}\[\]]*[^\\\n\s;{}\[\]]?/
             )
           )
         )

@@ -866,8 +866,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "PATTERN",
-              "value": "[\\w\\d$-]"
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 0,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[\\w\\d$-]"
+                }
+              }
             },
             {
               "type": "SYMBOL",
@@ -891,7 +898,18 @@
                   "value": 0,
                   "content": {
                     "type": "PATTERN",
-                    "value": "([\\w\\d'\"$(),]+)?( +|-)[\\w\\d'\"$()]+"
+                    "value": "[\\w\\d'\"$(),]+"
+                  }
+                }
+              },
+              {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PREC",
+                  "value": 0,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "( +|-)[\\w\\d'\"$()]+"
                   }
                 }
               }
@@ -902,8 +920,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "PATTERN",
-              "value": "[\\w\\d'\"$()]+"
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 0,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[\\w\\d'\"$()]+"
+                }
+              }
             },
             {
               "type": "BLANK"
@@ -2047,7 +2072,7 @@
               "value": -1,
               "content": {
                 "type": "PATTERN",
-                "value": "[^'\"`\\\\|\\n\\s;{}\\[\\]]([^\\\\\\n;{}\\[\\]]*[^\\\\\\n\\s;{}\\[\\]])?"
+                "value": "[^'\"`\\\\|\\n\\s;{}\\[\\]][^\\\\\\n;{}\\[\\]]*[^\\\\\\n\\s;{}\\[\\]]?"
               }
             }
           }
