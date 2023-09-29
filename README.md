@@ -1,6 +1,6 @@
 # tree-sitter-d2
 
-d2 grammar for tree-sitter.
+D2 grammar for tree-sitter.
 
 References:
 
