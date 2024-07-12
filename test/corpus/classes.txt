@@ -25,14 +25,18 @@ classes: {
 (source_file
   (classes
     (keyword_classes)
+    (colon)
     (block
       (class_name)
+      (colon)
       (class_block
         (attribute
           (keyword_style)
+          (colon)
           (block
             (attribute
               (attr_key)
+              (colon)
               (attr_value
                 (string (string_fragment))
               )
@@ -58,14 +62,17 @@ classes: {
 (source_file
   (classes
     (keyword_classes)
+    (colon)
     (block
       (class_name)
       (dot)
       (attribute
         (keyword_style)
+        (colon)
         (block
           (attribute
             (attr_key)
+            (colon)
             (attr_value
               (string (string_fragment))
             )
@@ -93,9 +100,11 @@ classes.foo.style: {
     (dot)
     (attribute
       (keyword_style)
+      (colon)
       (block
         (attribute
           (attr_key)
+          (colon)
           (attr_value
             (string (string_fragment))
           )
@@ -121,12 +130,15 @@ classes.foo: {
     (keyword_classes)
     (dot)
     (class_name)
+    (colon)
     (class_block
       (attribute
         (keyword_style)
+        (colon)
         (block
           (attribute
             (attr_key)
+            (colon)
             (attr_value
               (string (string_fragment))
             )
@@ -150,6 +162,7 @@ foo.class: biz
     (dot)
     (attribute
       (keyword_class)
+      (colon)
       (class_name)
     )
   )
@@ -169,6 +182,7 @@ foo.class: [biz; baz]
     (dot)
     (attribute
       (keyword_class)
+      (colon)
       (class_list
         (class_name)
       )
@@ -179,6 +193,7 @@ foo.class: [biz; baz]
     (dot)
     (attribute
       (keyword_class)
+      (colon)
       (class_list
         (class_name)
         (class_name)
@@ -205,19 +220,23 @@ foo: {
 (source_file
   (container
     (container_key)
+    (colon)
     (block
       (attribute
         (keyword_class)
+        (colon)
         (class_name)
       )
       (attribute
         (keyword_class)
+        (colon)
         (class_list
           (class_name)
         )
       )
       (attribute
         (keyword_class)
+        (colon)
         (class_list
           (class_name)
           (class_name)
@@ -225,6 +244,7 @@ foo: {
       )
       (attribute
         (keyword_class)
+        (colon)
         (class_list
           (class_name)
           (class_name)

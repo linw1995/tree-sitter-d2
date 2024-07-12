@@ -51,12 +51,15 @@ foo: {
 (source_file
   (container
     (container_key)
+    (colon)
     (block
       (container
         (container_key)
+        (colon)
         (block
           (container
             (container_key)
+            (colon)
             (block
               (shape (shape_key))
             )
@@ -84,17 +87,20 @@ foo: Foo {
 (source_file
   (container
     (container_key)
+    (colon)
     (label)
     (block
       (container
         (container_key)
+        (colon)
         (label)
         (block
           (container
             (container_key)
+            (colon)
             (label)
             (block
-              (shape (shape_key) (label))
+              (shape (shape_key) (colon) (label))
             )
           )
         )
@@ -118,6 +124,7 @@ foo: {
 (source_file
   (container
     (container_key)
+    (colon)
     (block
       (shape (shape_key))
       (shape (shape_key))
@@ -144,12 +151,15 @@ Foo biz bar: {
 (source_file
   (container
     (container_key)
+    (colon)
     (block
       (container
         (container_key)
+        (colon)
         (block
           (container
             (container_key)
+            (colon)
             (block
               (shape (shape_key))
             )
@@ -177,14 +187,17 @@ Foo biz bar: Biz biz Bar {
 (source_file
   (container
     (container_key)
+    (colon)
     (label)
     (block
       (container
         (container_key)
+        (colon)
         (label)
         (block
           (container
             (container_key)
+            (colon)
             (label)
             (block
               (shape (shape_key))
@@ -216,6 +229,7 @@ Foo: Baz {
 (source_file
   (container
     (container_key)
+    (colon)
     (label)
     (block
       (shape (shape_key))
@@ -241,10 +255,12 @@ primty: Primitive types {
 (source_file
   (container
     (container_key)
+    (colon)
     (label)
     (block
       (container
         (container_key)
+        (colon)
         (block
           (shape
             (shape_key (string (string_fragment)))
@@ -253,12 +269,14 @@ primty: Primitive types {
       )
       (container
         (container_key)
+        (colon)
         (block
           (shape (shape_key))
         )
       )
       (container
         (container_key)
+        (colon)
         (block
           (shape (shape_key))
           (shape (shape_key))
@@ -280,11 +298,12 @@ container: {
 (source_file
   (container
     (container_key)
+    (colon)
     (block
       (container
         (container_key (keyword_underscore))
         (dot)
-        (shape (shape_key) (label))
+        (shape (shape_key) (colon) (label))
       )
     )
   )

@@ -10,7 +10,7 @@ playground: build-wasm
 	tree-sitter playground --quiet
 
 build-wasm: build
-	tree-sitter build-wasm
+	tree-sitter build --wasm
 
 build:
 	tree-sitter generate

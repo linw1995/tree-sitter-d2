@@ -55,7 +55,7 @@ bar
 ================================================================================
 Complex shape key
 ================================================================================
- Foo bar 
+ Foo bar
 -Biz-baz-
 imAShape
 im_a$_shape
@@ -129,9 +129,9 @@ a: Foo Bar; b: Biz Baz
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (label))
-  (shape (shape_key) (label))
-  (shape (shape_key) (label))
+  (shape (shape_key) (colon) (label))
+  (shape (shape_key) (colon) (label))
+  (shape (shape_key) (colon) (label))
 )
 
 ================================================================================
@@ -143,9 +143,9 @@ a: Foo\nB\@r; b: Biz\nBaz
 --------------------------------------------------------------------------------
 
 (source_file
-  (shape (shape_key) (label (escape_sequence) (escape_sequence)))
-  (shape (shape_key) (label (escape_sequence) (escape_sequence)))
-  (shape (shape_key) (label (escape_sequence)))
+  (shape (shape_key) (colon) (label (escape_sequence) (escape_sequence)))
+  (shape (shape_key) (colon) (label (escape_sequence) (escape_sequence)))
+  (shape (shape_key) (colon) (label (escape_sequence)))
 )
 
 
@@ -161,7 +161,7 @@ bar   :  Foo Bar;     baz
 
 (source_file
   (shape (shape_key))
-  (shape (shape_key) (label))
+  (shape (shape_key) (colon) (label))
   (shape (shape_key))
 )
 
@@ -175,6 +175,7 @@ Use quoted string as shape key and label
 (source_file
   (shape
     (shape_key (string (string_fragment)))
+    (colon)
     (label (string (string_fragment))))
 )
 
@@ -190,6 +191,7 @@ foo: |
 (source_file
   (shape
     (shape_key)
+    (colon)
     (text_block
       (raw_text)
     )
@@ -216,6 +218,7 @@ foo: |go
 (source_file
   (shape
     (shape_key)
+    (colon)
     (text_block
       (language)
       (raw_text)
@@ -243,6 +246,7 @@ $$$|
 (source_file
   (shape
     (shape_key)
+    (colon)
     (text_block
       (language)
       (raw_text)
@@ -262,12 +266,14 @@ bar: |##md ## hello world ##|
 (source_file
   (shape
     (shape_key)
+    (colon)
     (text_block
       (raw_text)
     )
   )
   (shape
     (shape_key)
+    (colon)
     (text_block
       (language)
       (raw_text)

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "grammar.js",
+  "types": "bindings/node",
   "author": "",
   "license": "ISC",
   "tree-sitter": [
@@ -13,5 +14,31 @@
       ],
       "injection-regex": "^d2$"
     }
+  ],
+  "dependencies": {
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.0"
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
   ]
 }

@@ -97,6 +97,10 @@
           "named": true
         },
         {
+          "type": "colon",
+          "named": true
+        },
+        {
           "type": "dot",
           "named": true
         },
@@ -133,6 +137,10 @@
         },
         {
           "type": "class_name",
+          "named": true
+        },
+        {
+          "type": "colon",
           "named": true
         },
         {
@@ -241,6 +249,10 @@
           "named": true
         },
         {
+          "type": "colon",
+          "named": true
+        },
+        {
           "type": "dot",
           "named": true
         },
@@ -269,6 +281,10 @@
         },
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "colon",
           "named": true
         },
         {
@@ -304,6 +320,10 @@
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "colon",
           "named": true
         },
         {
@@ -436,6 +456,10 @@
         },
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "colon",
           "named": true
         },
         {
@@ -604,6 +628,10 @@
   {
     "type": "border-radius",
     "named": false
+  },
+  {
+    "type": "colon",
+    "named": true
   },
   {
     "type": "constraint",

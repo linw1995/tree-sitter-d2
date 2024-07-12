@@ -31,7 +31,7 @@ const attrAlias = mkAlias(($) => $.attribute);
 
 // mkAttrCont :: ($ -> Rule) -> ($ -> Rule) -> $ -> Rule
 const mkAttrCont = (onValue) => (onKey) => ($) =>
-  seq(onKey($), $._colon, onValue($));
+  seq(onKey($), $.colon, onValue($));
 const mkAttr = (onKey) => mkAttrCont(($) => $.attr_value)(attrKeyAlias(onKey));
 const mkListAttr = (onKey) =>
   mkAttrCont(
@@ -98,7 +98,7 @@ module.exports = grammar({
           $._full_connection_path,
           alias($._referencing_full_connection_path, $.referencing)
         ),
-        optional(seq($._colon, optional($.label))),
+        optional(seq($.colon, optional($.label))),
         optional(seq(alias($._connection_block, $.block)))
       ),
 
@@ -132,7 +132,7 @@ module.exports = grammar({
           choice(
             optional(seq($.dot, $._classes_item)),
             seq(
-              optional(seq($._colon, optional($.label))),
+              optional(seq($.colon, optional($.label))),
               optional(alias($._classes_block, $.block))
             )
           )
@@ -147,7 +147,7 @@ module.exports = grammar({
         choice(
           optional(seq($.dot, $._shape_attribute)),
           seq(
-            optional(seq($._colon, optional($.label))),
+            optional(seq($.colon, optional($.label))),
             optional(alias($._classes_item_block, $.class_block))
           )
         )
@@ -169,7 +169,7 @@ module.exports = grammar({
           choice(
             seq($.dot, choice($.shape, $.container)),
             seq(
-              optional(seq($._colon, optional($.label))),
+              optional(seq($.colon, optional($.label))),
               optional(alias($._container_block, $.block))
             )
           )
@@ -192,7 +192,7 @@ module.exports = grammar({
             choice(
               seq($.dot, $._shape_attribute),
               seq(
-                $._colon,
+                $.colon,
                 choice(
                   $.label,
                   seq(
@@ -307,7 +307,7 @@ module.exports = grammar({
           $.keyword_style,
           choice(
             seq($.dot, alias($._inner_style_attribute, $.attribute)),
-            seq($._colon, alias($._style_attribute_block, $.block))
+            seq($.colon, alias($._style_attribute_block, $.block))
           )
         )
       ),
@@ -364,7 +364,7 @@ module.exports = grammar({
         choice(
           seq($.dot, alias($._style_attribute, $.attribute)),
           seq(
-            optional(seq($._colon, optional($.label))),
+            optional(seq($.colon, optional($.label))),
             optional(seq(alias($._container_block, $.block)))
           )
         )
@@ -393,7 +393,7 @@ module.exports = grammar({
 
     _dash: ($) => token.immediate("-"),
 
-    _colon: ($) => token(":"),
+    colon: ($) => token(":"),
 
     arrow: ($) => token(prec(PREC.ARROW, choice(/-+>/, /--+/, /<-+/, /<-+>/))),
 
@@ -444,7 +444,7 @@ module.exports = grammar({
             /[0-7]{1,3}/,
             /x[0-9a-fA-F]{2}/,
             /u[0-9a-fA-F]{4}/,
-            /u{[0-9a-fA-F]+}/
+            /u\{[0-9a-fA-F]+\}/
           )
         )
       ),

@@ -7,6 +7,9 @@ fn main() {
         .flag_if_supported("-Wno-unused-parameter")
         .flag_if_supported("-Wno-unused-but-set-variable")
         .flag_if_supported("-Wno-trigraphs");
+    #[cfg(target_env = "msvc")]
+    c_config.flag("-utf-8");
+
     let parser_path = src_dir.join("parser.c");
     c_config.file(&parser_path);
 
@@ -31,7 +34,7 @@ fn main() {
     cpp_config
         .flag_if_supported("-Wno-unused-parameter")
         .flag_if_supported("-Wno-unused-but-set-variable");
-    let scanner_path = src_dir.join("scanner.cc");
+    let scanner_path = src_dir.join("scanner.c");
     cpp_config.file(&scanner_path);
     cpp_config.compile("scanner");
     println!("cargo:rerun-if-changed={}", scanner_path.to_str().unwrap());

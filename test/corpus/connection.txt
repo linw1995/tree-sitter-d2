@@ -175,12 +175,14 @@ bar -> baz: Yes
     (shape_key)
     (arrow)
     (shape_key)
+    (colon)
     (label)
   )
   (connection
     (shape_key)
     (arrow)
     (shape_key)
+    (colon)
     (label)
   )
 )
@@ -197,6 +199,7 @@ foo.biz.baz -> bar.baz.biz: Label
     (container_key) (dot) (container_key) (dot) (shape_key)
     (arrow)
     (container_key) (dot) (container_key) (dot) (shape_key)
+    (colon)
     (label)
   )
 )
@@ -215,11 +218,13 @@ foo.baz: {
     (container_key) (dot)
     (container
       (container_key)
+      (colon)
       (block
         (connection
           (shape_key)
           (arrow)
           (shape_key)
+          (colon)
           (label)
         )
       )
@@ -270,7 +275,7 @@ Diclare a connection with espaced key fragments
 )
 
 ================================================================================
-Declare a referencing connection 
+Declare a referencing connection
 ================================================================================
 (x() -> y())
 (x() -> y())[0]
@@ -310,6 +315,7 @@ Declare a referencing connection with label
       (arrow)
       (shape_key)
     )
+    (colon)
     (label)
   )
   (connection
@@ -319,6 +325,7 @@ Declare a referencing connection with label
       (shape_key)
       (index (integer))
     )
+    (colon)
     (label)
   )
 )
@@ -342,12 +349,14 @@ Declare a referencing connection with block
       (arrow)
       (shape_key)
     )
+    (colon)
     (block
       (attribute
         (keyword_style)
         (dot)
         (attribute
           (attr_key)
+          (colon)
           (attr_value
             (escape_sequence)
           )
@@ -362,12 +371,14 @@ Declare a referencing connection with block
       (shape_key)
       (index (integer))
     )
+    (colon)
     (block
       (attribute
         (keyword_style)
         (dot)
         (attribute
           (attr_key)
+          (colon)
           (attr_value
             (escape_sequence)
           )
